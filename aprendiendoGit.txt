@@ -583,3 +583,102 @@ git commit -m "Ignoro miRepoAprendizaje (es repositorio independiente)"
 🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
 
 
+💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊
+CÓMO ENLAZAR NUESTRO REPOSITORIO CON GITHUB:
+💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊
+
+erfecto 🚀 — te guío paso a paso para conectar tu nuevo repo local (miRepoAprendizaje) con GitHub y subirlo correctamente.
+
+-----------------------------------------
+🧩 PASO 1: Crear el repositorio en GitHub
+-----------------------------------------
+
+Entra a tu cuenta en https://github.com
+.
+
+Haz clic en el botón verde “New” o ve a
+👉 https://github.com/new
+
+
+Ponle un nombre (por ejemplo):
+
+miRepoAprendizaje
+
+
+No marques las opciones de “Initialize this repository with a README”, .gitignore, ni “License”.
+(Ya tienes tu repo listo localmente.)
+
+Haz clic en Create repository.
+
+
+---------------------------------------
+🔗 PASO 2: Copiar la URL del nuevo repo
+---------------------------------------
+
+Cuando GitHub te muestre la página del repo vacío, copia la URL que aparece arriba, por ejemplo:
+
+Si usas HTTPS:
+
+https://github.com/tuUsuario/miRepoAprendizaje.git
+
+
+(o si prefieres SSH):
+
+git@github.com:tuUsuario/miRepoAprendizaje.git
+
+
+-------------------------------------------------
+💻 PASO 3: Conectar tu repositorio local a GitHub
+-------------------------------------------------
+
+En tu terminal (asegúrate de estar en la carpeta del repo local):
+
+cd /c/Users/mipc/documents/repoGit/miRepoAprendizaje
+
+
+-----------------
+Agrega el remoto:
+-----------------
+
+git remote add origin https://github.com/tuUsuario/miRepoAprendizaje.git
+
+(sustituye por tu URL real)
+
+-----------------------------------
+
+Verifica que se agregó correctamente:
+
+git remote -v
+
+-----------------------------------
+
+Deberías ver algo como:
+
+origin  https://github.com/tuUsuario/miRepoAprendizaje.git (fetch)
+origin  https://github.com/tuUsuario/miRepoAprendizaje.git (push)
+
+
+-----------------------------------
+🚀 PASO 4: Subir tu commit a GitHub
+-----------------------------------
+
+Ejecuta:
+
+git branch -M main
+git push -u origin main
+-----------------------
+
+Esto sube tu commit inicial y establece la rama principal (main).
+
+
+
+----------------------------------------
+🎉 PASO 5 (Opcional): Verifica en GitHub
+----------------------------------------
+
+Abre tu repo en GitHub y actualiza la página.
+Deberías ver tu archivo aprendiendoGit.txt y tu commit inicial.
+----------------------------------------------------------------
+
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
