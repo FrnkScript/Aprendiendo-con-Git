@@ -292,3 +292,294 @@ Política de forks / visibilidad (qué puede hacer público vs privado).
 Branch protection (proteger main, reglas). 
 
 🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
+
+
+
+
+
+👀👀👀👀👀👀👀👀👀👀👀👀
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+HE CREADO UNA CARPETA Y DENTRO UN ARCHIVO PERO NO HE INICIALIZADO GIT CON: git init. ¿Qué hacer?:
+
+Esto es aparte:
+He creado un documento en una carpeta nueva en mi pc y quiero hacer un commit pero me muestra esto, qué debo hacer?:
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   aprendiendoGit.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        ../repo-migrar/
+        ../repo-remoto/
+        ../repoGitIgnore/
+
+
+Perfecto 👍 Veamos qué pasa.
+
+Tu salida de git status muestra dos cosas importantes:
+
+🔹 1. Ya tienes un archivo en stage (listo para commit)
+Changes to be committed:
+        new file:   aprendiendoGit.txt
+
+
+Eso significa que aprendiendoGit.txt ya está preparado para hacer commit.
+
+🔹 2. Tienes otras carpetas sin seguimiento (“untracked”)
+Untracked files:
+        ../repo-migrar/
+        ../repo-remoto/
+        ../repoGitIgnore/
+
+
+Estas están fuera de tu carpeta del repositorio actual (nota los ../), o sea, 
+son repositorios hermanos, no parte del repo donde estás trabajando ahora.
+Git simplemente te avisa que existen cerca, pero no las tocará a menos que las agregues explícitamente.
+
+✅ Entonces, lo que debes hacer
+
+--------------------------------------------------------------------
+Si solo quieres hacer commit del archivo aprendiendoGit.txt, ejecuta:
+
+git commit -m "Agrego el archivo aprendiendoGit.txt"
+--------------------------------------------------------------------
+
+
+Eso guardará ese cambio en tu historial de Git.
+
+💡 (Opcional) Si no quieres que aparezcan las otras carpetas en git status
+
+--------------------------------------------
+Puedes ignorarlas agregándolas a tu .gitignore:
+
+echo "../repo-migrar/" >> .gitignore
+echo "../repo-remoto/" >> .gitignore
+echo "../repoGitIgnore/" >> .gitignore
+git add .gitignore
+git commit -m "Ignoro repositorios vecinos"
+--------------------------------------------
+
+
+
+
+¿Por qué aparecen esas rutas con ../ (puede indicar que hiciste git init en una carpeta demasiado profunda)?
+
+Perfecto 💪 vamos paso a paso.
+Primero necesito confirmar qué hiciste hasta ahora y dónde estás ubicado.
+Vamos a resolverlo en orden para que tu commit funcione sin errores.
+
+🧭 Paso 1: Verifica en qué carpeta estás
+
+-------------------
+Ejecuta este comando en tu terminal:
+
+pwd
+-------------------
+
+
+Eso mostrará la ruta completa de la carpeta donde estás parado.
+Por ejemplo, podría verse así:
+
+/home/usuario/repos/mi-proyecto
+
+
+👉 Copia y pégame aquí exactamente lo que te devuelve.
+
+
+🔍 Paso 2: Muestra qué hay en esa carpeta
+
+--------
+Ejecuta:
+
+ls -la
+--------
+
+Si el repositorio está bien ubicado → solo haces el commit.
+
+Si está en una carpeta incorrecta → te muestro cómo mover el repo o corregirlo sin perder nada.
+
+
+
+Este es el paso 1: 
+
+$ pwd
+/c/Users/mipc/documents/repoGit/miRepoAprendizaje 
+
+
+Estás dentro de esta carpeta:
+
+/c/Users/mipc/documents/repoGit/miRepoAprendizaje
+
+
+Ahora, lo que me mostraba tu git status (con rutas como ../repo-migrar/, ../repo-remoto/, etc.) 
+indica que Git está viendo cosas fuera de esa carpeta, en el mismo nivel que miRepoAprendizaje.
+Eso no debería pasar normalmente si hiciste git init dentro de miRepoAprendizaje.
+
+
+Vamos a confirmar eso.
+
+🧩 Paso 2: Verifica que el repositorio está en la carpeta correcta
+
+----------
+Ejecuta este comando dentro de tu carpeta actual:
+
+ls -la
+----------
+y dime si aparece una carpeta llamada .git en la lista.
+
+
+Si aparece .git → perfecto, el repositorio está bien inicializado ahí.
+
+Si no aparece, significa que Git se inicializó en una carpeta más arriba (por ejemplo, en repoGit).
+
+
+
+Qué comando ejecutar para hacer el commit correctamente o mover el repo si está en el lugar equivocado.
+
+Si he hecho 🌿ls -la🌿  me aparece esto:
+$ ls -la
+total 16
+drwxr-xr-x 1 mipc 197619     0 Oct  6 20:58 ./ 
+drwxr-xr-x 1 mipc 197619     0 Oct  6 20:57 ../ 
+-rw-r--r-- 1 mipc 197619 10169 Oct  6 21:16 aprendiendoGit.txt 
+
+
+👉 Tu carpeta miRepoAprendizaje no tiene un repositorio Git dentro (no hay carpeta .git).
+
+Eso explica todo lo que viste antes:
+Git está detectando cambios desde una carpeta superior, probablemente en
+/c/Users/mipc/documents/repoGit,
+donde sí hay un .git/.
+
+Entonces lo que está pasando es esto:
+
+repoGit/
+│
+├── .git/                    👈 Aquí está tu repositorio real
+├── miRepoAprendizaje/       👈 Aquí estás tú
+├── repo-migrar/
+├── repo-remoto/
+└── repoGitIgnore/
+
+
+Por eso git status muestra rutas como ../repo-migrar/ (Git está siguiendo todo dentro de repoGit/).
+
+✅ Qué puedes hacer (2 opciones)
+
+
+🐥 Opción 1 — Mantener un solo repo grande (más fácil)
+
+Si quieres que todo lo que hay en repoGit/ esté bajo un solo repositorio Git 
+(incluyendo miRepoAprendizaje y las otras carpetas),
+entonces simplemente haz el commit desde donde ya estás:
+
+git commit -m "Agrego el archivo aprendiendoGit.txt"
+
+
+Eso guardará tu archivo dentro del mismo repositorio grande (repoGit).
+
+
+
+🐥 Opción 2 — Tener un repo separado solo para miRepoAprendizaje (más limpio)
+
+Si prefieres que miRepoAprendizaje sea su propio repositorio independiente, sigue estos pasos:
+
+Elimina la relación con el repo padre:
+Entra a repoGit (la carpeta superior) y verifica que hay un .git ahí.
+
+Luego, en miRepoAprendizaje, inicializa un nuevo repo:
+
+cd /c/Users/mipc/documents/repoGit/miRepoAprendizaje
+git init
+git add aprendiendoGit.txt
+git commit -m "Primer commit: agrego aprendiendoGit.txt"
+
+
+(Opcional) Si quieres subirlo a GitHub, luego puedes crear un repo remoto y hacer:
+
+git remote add origin <URL-del-repo-en-GitHub>
+git push -u origin master
+
+
+
+
+
+👀 Si ya hice commit antes de inicializarlo entiendo que se ha guardado en la carpeta repoGit, 
+¿cómo puedo eliminarlo de ahí para que solo me aparezca en la carpeta "miRepoAprendizaje?
+
+
+💡 Si ya hiciste un commit antes de inicializar Git en miRepoAprendizaje, 
+ese commit quedó guardado en el repositorio que está en la carpeta superior (repoGit/.git).
+
+Así que ahora lo que quieres hacer es sacar miRepoAprendizaje del repo “padre” (repoGit) y convertirla en un repo independiente.
+
+
+Vamos paso a paso para hacerlo bien y sin perder nada 👇
+
+🧹 PASO 1: Ir a la carpeta “padre” (el repo grande)
+cd /c/Users/mipc/documents/repoGit
+
+
+Comprueba que ahí está la carpeta .git (que confirma que aquí está el repo principal):
+
+ls -la
+
+
+Deberías ver algo como:
+
+.git/
+miRepoAprendizaje/
+repo-migrar/
+...
+
+🚫 PASO 2: Eliminar la carpeta miRepoAprendizaje del seguimiento de Git
+
+Esto no borra los archivos, solo hace que Git deje de rastrear esa carpeta dentro del repo grande.
+
+Ejecuta:
+
+git rm -r --cached miRepoAprendizaje
+
+
+👉 Esto quita miRepoAprendizaje del stage del repo de repoGit, pero la carpeta seguirá existiendo físicamente.
+
+Luego haz un commit para registrar que ya no forma parte del repo principal:
+
+git commit -m "Dejo de rastrear la carpeta miRepoAprendizaje (será repo independiente)"
+
+🧱 PASO 3: Crear un nuevo repositorio en miRepoAprendizaje
+
+Ahora ve a esa carpeta:
+
+cd miRepoAprendizaje
+
+
+Inicializa un nuevo repositorio Git solo para ella:
+
+git init
+git add aprendiendoGit.txt
+git commit -m "Primer commit: agrego aprendiendoGit.txt"
+
+
+Y listo 🎉
+Ahora miRepoAprendizaje es su propio repositorio separado del resto.
+
+💡 PASO 4 (opcional): Ignorar esa carpeta en el repo principal
+
+Para que Git del repo grande no vuelva a mostrarte miRepoAprendizaje/ como “untracked”, agrega esta línea a su .gitignore:
+
+echo "miRepoAprendizaje/" >> .gitignore
+git add .gitignore
+git commit -m "Ignoro miRepoAprendizaje (es repositorio independiente)"
+
+
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
