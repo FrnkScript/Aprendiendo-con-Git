@@ -1,0 +1,1087 @@
+Hola! Este documento recoge información para que puedas crear un repositorio Local (en tu PC)
+y lo subas a GitHub, puedas editarlo tú y otros usuarios de GitHub.
+
+Te explico todo paso a paso y con opciones. 
+
+
+Antes de empezar a crear nuestro primer repositorio deberemos aprender qué es una clave ssh:
+En Git, una clave SSH sirve principalmente para autenticarte de manera segura con un servidor remoto 
+(como GitHub, GitLab o Bitbucket) cuando trabajas con repositorios, evitando tener que ingresar tu usuario y contraseña cada vez.
+
+Aquí te explico con detalle:
+
+-----------------------
+1. Autenticación segura
+-----------------------
+
+Git utiliza SSH para identificarte sin necesidad de contraseñas.
+
+
+Cuando conectas tu computadora con un servidor Git mediante SSH:
+
+- Tu computadora usa la clave privada.
+
+- El servidor verifica que coincida con la clave pública que subiste a tu cuenta.
+
+- Si coinciden, te permite acceder al repositorio.
+
+
+
+----------------------------------
+2. Operaciones que usan SSH en Git
+----------------------------------
+
+Con una clave SSH, puedes hacer de forma segura:
+
+- Clonar un repositorio:
+
+git clone git@github.com:usuario/repositorio.git
+
+
+- Hacer push (subir cambios):
+
+git push origin main
+
+
+- Hacer pull (traer cambios):
+
+git pull origin main
+
+
+Todo esto sin tener que ingresar tu contraseña cada vez.
+
+
+------------------------------
+3. Ventajas de usar SSH en Git
+------------------------------
+
+Más seguro: la clave SSH es mucho más difícil de adivinar que una contraseña.
+
+Más cómodo: acceso automático sin escribir usuario y contraseña.
+
+Control de dispositivos: puedes generar claves distintas para diferentes computadoras y revocar las que no uses.
+
+💡 En resumen: En Git, la clave SSH sirve para identificarte de forma segura ante el servidor remoto, 
+permitiendo clonar, subir y bajar cambios de repositorios sin usar contraseñas, con una conexión cifrada.
+Crear una clave SSH es recomendable si vas a usar la terminal (push/pull) 
+porque es cómodo y seguro; alternativa: HTTPS + Personal Access Token (PAT). 
+
+Luego te indico cómo crear el repositorio (todas las opciones que verás en la web), 
+cómo añadir tus dos archivos (por la web o desde local), y cómo asegurarte de que solo tú tengas control total. 
+Incluyo comandos y ejemplos listos para copiar.
+
+
+🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥🐥
+DIFERENCIAS ENTRE UNA CLAVE SSH CUALQUIERA Y UNA CLAVE SSH EN GITHUB:
+
+la clave SSH que usas en GitHub funciona con el mismo principio que cualquier clave SSH, 
+pero con un propósito específico: autenticarte al interactuar con repositorios de GitHub de manera segura. 
+
+Te explico las similitudes y diferencias:
+
+-----------
+Similitudes
+-----------
+
+🌿 Par de claves: también consiste en una clave pública y una clave privada.
+
+🌿 La clave pública la subes a GitHub.
+
+🌿 La clave privada la guardas en tu computadora.
+
+🌿 Autenticación sin contraseña: cuando clonas, haces push o pull, 
+GitHub verifica tu clave privada contra la pública, evitando que tengas que escribir tu contraseña.
+
+🌿 Seguridad: la comunicación está cifrada, igual que con cualquier conexión SSH normal.
+
+
+
+-----------
+Diferencias
+-----------
+
+✍️ Propósito:
+
+🌿 SSH normal: acceder a servidores remotos para administración o ejecución de comandos.
+
+🌿 SSH en GitHub: autenticación específica para operaciones con repositorios Git.
+
+
+✍️ Restricciones:
+
+🌿 La clave de GitHub no te da acceso a tu computadora ni a otros servidores, solo a GitHub.
+
+
+
+✍️ Gestión de claves:
+
+🌿 GitHub permite tener múltiples claves asociadas a tu cuenta para diferentes dispositivos o proyectos.
+
+
+--------------
+💡 En resumen: Es la misma tecnología, pero aplicada a GitHub para que puedas trabajar 
+con repositorios sin escribir tu contraseña cada vez, de forma segura y cifrada.
+--------------
+
+--------------
+💡 Resumen rápido: Una clave SSH sirve para identificarte y conectarte de manera segura a un servidor, 
+sin necesidad de usar contraseñas y con la comunicación cifrada.
+--------------
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+1⏩ ¿Debo crear una clave SSH?
+
+Recomendación: sí si vas a trabajar desde la terminal (Linux / macOS / Git Bash Windows) 
+o si quieres evitar tener que introducir tokens/contraseñas cada vez.
+
+🧐 Ventajas SSH: autentificación sin escribir token cada push, es seguro y ampliamente usado.
+
+💊 Alternativa: HTTPS + Personal Access Token (PAT) o usar GitHub Desktop / GitHub CLI. 
+Si prefieres PAT, GitHub ahora recomienda los fine-grained tokens cuando sea posible. 
+
+
+2⏩⏩ Cómo crear una clave SSH (opciones y comandos)
+
+✍️ Nota: usa ed25519 cuando tu sistema lo soporte (actualmente recomendado). Si no, rsa -b 4096 es la alternativa.
+
+
+---------------------------------
+Comprobar si ya tienes una clave
+
+ls -al ~/.ssh
+---------------------------------
+
+---------------------------------------------------
+Generar (macOS / Linux / Git Bash):
+
+ssh-keygen -t ed25519 -C "tu-email@example.com"
+# Si ed25519 no funciona:
+# ssh-keygen -t rsa -b 4096 -C "tu-email@example.com"
+---------------------------------------------------
+
+
+---------------------------------------------------
+Arrancar el agente SSH y añadir la clave
+
+# arrancar ssh-agent
+eval "$(ssh-agent -s)"
+---------------------------------------------------
+
+---------------------------------------------------
+# añadir la clave al agente
+ssh-add ~/.ssh/id_ed25519
+---------------------------------------------------
+
+
+---------------------------------------------------
+Copiar la clave pública al portapapeles
+
+macOS: pbcopy < ~/.ssh/id_ed25519.pub
+
+Linux: xclip -sel clip < ~/.ssh/id_ed25519.pub (si tienes xclip) — o cat ~/.ssh/id_ed25519.pub y copiar a mano
+
+Windows (Git Bash): clip < ~/.ssh/id_ed25519.pub
+---------------------------------------------------
+
+---------------------------------------------------
+Añadir la clave a GitHub
+
+En GitHub: esquina superior derecha → Settings → SSH and GPG keys → New SSH key → pega tu clave pública y guarda. 
+---------------------------------------------------
+
+----------------------
+Probar conexión
+
+ssh -T git@github.com
+----------------------
+
+Si todo va bien verás un mensaje de bienvenida. 
+
+
+
+
+                            ----------------------------------------------------
+🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩 Aquí viene cómo creamos nuestro primer repositorio:  🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩
+                            ----------------------------------------------------
+
+3⏩⏩⏩ Crear el repositorio (opciones que verás en la interfaz web)
+
+Ir a GitHub y pulsar + → New repository (o https://github.com/new). 
+
+---------------------------------------------------------
+
+🏃‍➡️ Pasos / opciones que te aparecerán y decisión a tomar:
+
+Owner: eliges tu cuenta personal o una organización (si perteneces a alguna). 
+
+Repository name: nombre corto y memorable.
+
+Description (opcional): una línea que describa el propósito.
+
+Visibility: Public (cualquiera lo puede ver / forkear) o Private (solo quien tú autorices puede ver). 
+✍️ Nota: tú puedes hacer público y seguir siendo el único con control administrativo (no confundir ver vs controlar). 
+
+----------------------------------
+🛎️ Initialize this repository with:
+
+README (crea el primer commit y muestra la página principal)
+
+.gitignore (elige plantilla para tu lenguaje)
+
+LICENSE (elige licencia si quieres permitir usos concretos)
+Si ya tienes un repo local con commits, no marques “Initialize with README” para evitar conflictos: 
+en ese caso crea el repo vacío y añade el remoto desde local (ver abajo). 
+
+
+🛎️ Create repository → una vez creado GitHub te mostrará instrucciones (clone URL SSH y HTTPS). 
+
+
+
+4⏩⏩⏩⏩ Crearlo desde la terminal (flujo típico)
+
+🛎️ Si prefieres crear localmente y subir:
+
+-------------------------------------------
+Si aún no tienes commits (nuevo proyecto):
+
+mkdir mi-repo && cd mi-repo
+git init
+git branch -M main                # establecer main como rama por defecto
+# crear archivos, e.g. git-notes.md github-notes.md
+
+git add .
+git commit -m "Inicial: notas sobre git y github"
+# añadir remote (SSH)
+
+git remote add origin git@github.com:TU-USER/NOMBRE-REPO.git
+git push -u origin main
+-------------------------------------------
+
+
+-------------------------------------------
+Si ya creaste el repo en GitHub y lo inicializaste con README: clona el repo primero o sincroniza:
+
+git clone git@github.com:TU-USER/NOMBRE-REPO.git
+# copiar/crear archivos dentro del clon
+
+git add .
+git commit -m "Añadir notas"
+git push
+-------------------------------------------
+
+
+Si tienes un repo local con historial y GitHub ya creó un README remoto, 
+evita git push directo → suele necesitar git pull --rebase o clonar y fusionar. 
+(Mejor clonar y mover archivos si eres principiante.) 
+
+
+5⏩⏩⏩⏩⏩ Añadir tus dos archivos (dos maneras)
+
+----------------------------------
+A. Desde la interfaz web (rápido):
+
+En la página del repo: 
+Add file → Create new file → pon el nombre (git-notes.md) → pega el contenido → abajo, en "Commit new file" escribe el mensaje 
+y selecciona Commit directly to the main branch (o crea rama y PR) → Commit.
+----------------------------------
+
+----------------------------------
+B. Desde local (más habitual):
+
+Crear git-notes.md y github-notes.md, git add, git commit, git push al remoto (SSH o HTTPS según tu preferencia).
+Ejemplos más arriba.
+----------------------------------
+
+
+
+6⏩⏩⏩⏩⏩⏩ Control de acceso: cómo hacer que solo TÚ tengas control total
+
+Propietario del repo (owner) en una cuenta personal tiene control total por defecto. 
+No añadas colaboradores si quieres ser el único con permisos administrativos. 
+Puedes ver/gestionar esto en Settings → Collaborators & teams. 
+
+
+Public vs control: 
+Que el repo sea público significa ver y forkear (la gente puede clonar y crear forks). 
+Eso no te quita control administrativo sobre el repo original; si quieres que nadie vea el código, usa Private. 
+
+
+Opciones adicionales para asegurarte control absoluto:
+
+No añadir colaboradores.
+
+Si en el futuro añades colaboradores, asigna roles (Write / Read / Admin) según necesites.
+
+Branch protection rules (si quieres evitar merges directos en main o exigir revisiones): 
+Settings → Branches → Add rule. Esto impide borrados/force-push y puede requerir revisiones o checks antes de permitir merges. 
+
+
+
+7⏩⏩⏩⏩⏩⏩⏩ Alternativas de autenticación (resumen)
+
+SSH (recomendado para terminal) — cómodo y seguro (ver arriba). 
+
+
+HTTPS + PAT (Personal Access Token) — si no quieres SSH, crea un token (fine-grained recomendado) 
+y úsalo en la primera operación cuando Git pida usuario/contraseña; GitHub lo reemplaza por token. 
+
+
+GitHub Desktop / GitHub CLI (gh) — interfaces gráficas/CLI que gestionan autenticación de forma guiada. 
+(Si te interesa, puedo darte los comandos gh repo create etc.)
+
+
+8⏩⏩⏩⏩⏩⏩⏩⏩ Checklist rápido (lo que vas a hacer)
+
+🐥 Configurar git local:
+
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu-email@example.com"
+------------------------------------------------------
+
+(Opcional pero recomendado) Generar SSH y añadirlo a GitHub (ver sección 2). 
+
+
+🐥 Crear repo en https://github.com/new
+ → elegir Owner, name, visibility, README/.gitignore/license según prefieras. 
+
+
+🐥 Añadir los dos archivos (web o local).
+
+🐥 Comprobar Settings → Collaborators & teams que no haya otros admins. 
+
+
+
+9⏩⏩⏩⏩⏩⏩⏩⏩⏩ Contenido ejemplo para tus dos archivos (puedes copiarlos tal cual)
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+git-notes.md
+
+✍️ # Notas rápidas sobre Git:
+
+- Configuración inicial:
+  - `git config --global user.name "Tu Nombre"`
+  - `git config --global user.email "tu-email@example.com"`
+
+- Flujo básico:
+  - `git init` → `git add .` → `git commit -m "mensaje"` → `git push origin main`
+
+- Ramas:
+  - `git branch nombre-rama`
+  - `git checkout nombre-rama`  (o `git switch nombre-rama`)
+  - `git merge nombre-rama` (desde main)
+
+- Recuperación:
+  - `git status`, `git log`, `git diff`, `git restore`, `git reset`
+
+- Buenas prácticas:
+  - Commits pequeños y mensajes claros.
+  - Usar ramas para features o fixes.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+github-notes.md
+
+✍️✍️✍️✍️ # Notas rápidas sobre GitHub ✍️✍️✍️✍️ 
+
+- Crear repositorio: https://github.com/new
+- URLs remotas:
+  - SSH: `git@github.com:TU-USER/NOMBRE-REPO.git`
+  - HTTPS: `https://github.com/TU-USER/NOMBRE-REPO.git`
+
+- Inicializar en GitHub:
+  - Opciones al crear: README, .gitignore, LICENSE.
+  - Si ya tienes un repo local con commits: evita inicializar README en GitHub (evita historia divergente).
+
+- Control de acceso:
+  - Repositorio público = cualquiera puede ver/forkear.
+  - Sigue siendo admin si no añades colaboradores.
+  - Para restringir pushes o exigir revisiones: usar Branch Protection Rules.
+
+- Autenticación:
+  - SSH recomendado para terminales.
+  - HTTPS con PAT si no usas SSH.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 👀 
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+HE CREADO UNA CARPETA Y DENTRO UN ARCHIVO PERO NO HE INICIALIZADO GIT CON: git init. ¿Qué hacer?:
+
+Esto es aparte:
+He creado un documento en una carpeta nueva en mi pc y quiero hacer un commit pero me muestra esto, qué debo hacer?:
+
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   aprendiendoGit.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        ../repo-migrar/
+        ../repo-remoto/
+        ../repoGitIgnore/
+
+
+Perfecto 👍 Veamos qué pasa.
+
+Tu salida de git status muestra dos cosas importantes:
+
+🔹 1. Ya tienes un archivo en stage (listo para commit)
+Changes to be committed:
+        new file:   aprendiendoGit.txt
+
+
+Eso significa que aprendiendoGit.txt ya está preparado para hacer commit.
+
+🔹 2. Tienes otras carpetas sin seguimiento (“untracked”)
+Untracked files:
+        ../repo-migrar/
+        ../repo-remoto/
+        ../repoGitIgnore/
+
+
+Estas están fuera de tu carpeta del repositorio actual (nota los ../), o sea, 
+son repositorios hermanos, no parte del repo donde estás trabajando ahora.
+Git simplemente te avisa que existen cerca, pero no las tocará a menos que las agregues explícitamente.
+
+✅ Entonces, lo que debes hacer
+
+--------------------------------------------------------------------
+Si solo quieres hacer commit del archivo aprendiendoGit.txt, ejecuta:
+
+git commit -m "Agrego el archivo aprendiendoGit.txt"
+--------------------------------------------------------------------
+
+
+Eso guardará ese cambio en tu historial de Git.
+
+💡 (Opcional) Si no quieres que aparezcan las otras carpetas en git status
+
+--------------------------------------------
+Puedes ignorarlas agregándolas a tu .gitignore:
+
+echo "../repo-migrar/" >> .gitignore
+echo "../repo-remoto/" >> .gitignore
+echo "../repoGitIgnore/" >> .gitignore
+git add .gitignore
+git commit -m "Ignoro repositorios vecinos"
+--------------------------------------------
+
+¿Por qué aparecen esas rutas con ../ (puede indicar que hiciste git init en una carpeta demasiado profunda)?
+
+Perfecto 💪 vamos paso a paso.
+Vamos a resolverlo en orden para que tu commit funcione sin errores.
+
+🧭 Paso 1: Verifica en qué carpeta estás
+
+-------------------
+Ejecuta este comando en tu terminal:
+
+pwd
+-------------------
+
+
+Eso mostrará la ruta completa de la carpeta donde estás parado.
+Por ejemplo, podría verse así:
+
+/home/usuario/repos/mi-proyecto
+
+
+🔍 Paso 2: Muestra qué hay en esa carpeta
+
+--------
+Ejecuta:
+
+ls -la
+--------
+
+Si el repositorio está bien ubicado → solo haces el commit.
+
+Si está en una carpeta incorrecta → te muestro cómo mover el repo o corregirlo sin perder nada.
+
+
+
+Este es el paso 1: 
+
+$ pwd
+/c/Users/mipc/documents/repoGit/miRepoAprendizaje 
+
+
+Estás dentro de esta carpeta:
+
+/c/Users/mipc/documents/repoGit/miRepoAprendizaje
+
+
+Ahora, lo que te mostraba tu git status (con rutas como ../repo-migrar/, ../repo-remoto/, etc.) 
+indica que Git está viendo cosas fuera de esa carpeta, en el mismo nivel que miRepoAprendizaje.
+Eso no debería pasar normalmente si hiciste git init dentro de miRepoAprendizaje.
+
+
+Vamos a confirmar eso.
+
+🧩 Paso 2: Verifica que el repositorio está en la carpeta correcta
+
+----------
+Ejecuta este comando dentro de tu carpeta actual:
+
+ls -la
+----------
+y dime si aparece una carpeta llamada .git en la lista.
+
+
+Si aparece .git → perfecto, el repositorio está bien inicializado ahí.
+
+Si no aparece, significa que Git se inicializó en una carpeta más arriba (por ejemplo, en repoGit).
+
+
+
+Qué comando ejecutar para hacer el commit correctamente o mover el repo si está en el lugar equivocado.
+
+Si he hecho 🌿ls -la🌿  me aparece esto:
+$ ls -la
+total 16
+drwxr-xr-x 1 mipc 197619     0 Oct  6 20:58 ./ 
+drwxr-xr-x 1 mipc 197619     0 Oct  6 20:57 ../ 
+-rw-r--r-- 1 mipc 197619 10169 Oct  6 21:16 aprendiendoGit.txt 
+
+
+👉 Tu carpeta miRepoAprendizaje no tiene un repositorio Git dentro (no hay carpeta .git).
+
+Eso explica todo lo que viste antes:
+Git está detectando cambios desde una carpeta superior, probablemente en
+/c/Users/mipc/documents/repoGit,
+donde sí hay un .git/.
+
+Entonces lo que está pasando es esto:
+
+repoGit/
+│
+├── .git/                    👈 Aquí está tu repositorio real
+├── miRepoAprendizaje/       👈 Aquí estás tú
+├── repo-migrar/
+├── repo-remoto/
+└── repoGitIgnore/
+
+
+Por eso git status muestra rutas como ../repo-migrar/ (Git está siguiendo todo dentro de repoGit/).
+
+✅ Qué puedes hacer (2 opciones)
+
+
+🐥 Opción 1 — Mantener un solo repo grande (más fácil)
+
+Si quieres que todo lo que hay en repoGit/ esté bajo un solo repositorio Git 
+(incluyendo miRepoAprendizaje y las otras carpetas),
+entonces simplemente haz el commit desde donde ya estás:
+
+git commit -m "Agrego el archivo aprendiendoGit.txt"
+
+
+Eso guardará tu archivo dentro del mismo repositorio grande (repoGit).
+
+
+
+🐥 Opción 2 — Tener un repo separado solo para miRepoAprendizaje (más limpio)
+
+Si prefieres que miRepoAprendizaje sea su propio repositorio independiente, sigue estos pasos:
+
+Elimina la relación con el repo padre:
+Entra a repoGit (la carpeta superior) y verifica que hay un .git ahí.
+
+Luego, en miRepoAprendizaje, inicializa un nuevo repo:
+
+cd /c/Users/mipc/documents/repoGit/miRepoAprendizaje
+git init
+git add aprendiendoGit.txt
+git commit -m "Primer commit: agrego aprendiendoGit.txt"
+
+
+(Opcional) Si quieres subirlo a GitHub, luego puedes crear un repo remoto y hacer:
+
+git remote add origin <URL-del-repo-en-GitHub>
+git push -u origin master
+
+
+
+
+
+👀 Si ya hice commit antes de inicializarlo entiendo que se ha guardado en la carpeta repoGit, 
+¿cómo puedo eliminarlo de ahí para que solo me aparezca en la carpeta "miRepoAprendizaje?
+
+
+💡 Si ya hiciste un commit antes de inicializar Git en miRepoAprendizaje, 
+ese commit quedó guardado en el repositorio que está en la carpeta superior (repoGit/.git).
+
+Así que ahora lo que quieres hacer es sacar miRepoAprendizaje del repo “padre” (repoGit) y convertirla en un repo independiente.
+
+
+Vamos paso a paso para hacerlo bien y sin perder nada 👇
+
+🧹 PASO 1: Ir a la carpeta “padre” (el repo grande)
+cd /c/Users/mipc/documents/repoGit
+
+
+Comprueba que ahí está la carpeta .git (que confirma que aquí está el repo principal):
+
+ls -la
+
+
+Deberías ver algo como:
+
+.git/
+miRepoAprendizaje/
+repo-migrar/
+...
+
+🚫 PASO 2: Eliminar la carpeta miRepoAprendizaje del seguimiento de Git
+
+Esto no borra los archivos, solo hace que Git deje de rastrear esa carpeta dentro del repo grande.
+
+Ejecuta:
+
+git rm -r --cached miRepoAprendizaje
+
+
+👉 Esto quita miRepoAprendizaje del stage del repo de repoGit, pero la carpeta seguirá existiendo físicamente.
+
+Luego haz un commit para registrar que ya no forma parte del repo principal:
+
+git commit -m "Dejo de rastrear la carpeta miRepoAprendizaje (será repo independiente)"
+
+🧱 PASO 3: Crear un nuevo repositorio en miRepoAprendizaje
+
+Ahora ve a esa carpeta:
+
+cd miRepoAprendizaje
+
+
+Inicializa un nuevo repositorio Git solo para ella:
+
+git init
+git add aprendiendoGit.txt
+git commit -m "Primer commit: agrego aprendiendoGit.txt"
+
+
+Y listo 🎉
+Ahora miRepoAprendizaje es su propio repositorio separado del resto.
+
+💡 PASO 4 (opcional): Ignorar esa carpeta en el repo principal
+
+Para que Git del repo grande no vuelva a mostrarte miRepoAprendizaje/ como “untracked”, agrega esta línea a su .gitignore:
+
+echo "miRepoAprendizaje/" >> .gitignore
+git add .gitignore
+git commit -m "Ignoro miRepoAprendizaje (es repositorio independiente)"
+
+
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
+💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊
+CÓMO ENLAZAR NUESTRO REPOSITORIO CON GITHUB:
+💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊💊
+
+Perfecto 🚀 — te guío paso a paso para conectar tu nuevo repo local (miRepoAprendizaje) con GitHub y subirlo correctamente.
+
+-----------------------------------------
+🧩 PASO 1: Crear el repositorio en GitHub
+-----------------------------------------
+
+Entra a tu cuenta en https://github.com
+.
+
+Haz clic en el botón verde “New” o ve a
+👉 https://github.com/new
+
+
+Ponle un nombre (por ejemplo):
+
+miRepoAprendizaje
+
+
+No marques las opciones de “Initialize this repository with a README”, .gitignore, ni “License”.
+(Ya tienes tu repo listo localmente.)
+
+Haz clic en Create repository.
+
+
+---------------------------------------
+🔗 PASO 2: Copiar la URL del nuevo repo
+---------------------------------------
+
+Cuando GitHub te muestre la página del repo vacío, copia la URL que aparece arriba, por ejemplo:
+
+Si usas HTTPS:
+
+https://github.com/tuUsuario/miRepoAprendizaje.git
+
+
+(o si prefieres SSH):
+
+git@github.com:tuUsuario/miRepoAprendizaje.git
+
+
+-------------------------------------------------
+💻 PASO 3: Conectar tu repositorio local a GitHub
+-------------------------------------------------
+
+En tu terminal (asegúrate de estar en la carpeta del repo local):
+
+cd /c/Users/mipc/documents/repoGit/miRepoAprendizaje
+
+
+-----------------
+Agrega el remoto:
+-----------------
+
+git remote add origin https://github.com/tuUsuario/miRepoAprendizaje.git
+
+(sustituye por tu URL real)
+
+-----------------------------------
+
+Verifica que se agregó correctamente:
+
+git remote -v
+
+-----------------------------------
+
+Deberías ver algo como:
+
+origin  https://github.com/tuUsuario/miRepoAprendizaje.git (fetch)
+origin  https://github.com/tuUsuario/miRepoAprendizaje.git (push)
+
+
+-----------------------------------
+🚀 PASO 4: Subir tu commit a GitHub
+-----------------------------------
+
+Ejecuta:
+
+git branch -M main
+git push -u origin main
+-----------------------
+
+Esto sube tu commit inicial y establece la rama principal (main).
+
+
+
+----------------------------------------
+🎉 PASO 5 (Opcional): Verifica en GitHub
+----------------------------------------
+
+Abre tu repo en GitHub y actualiza la página.
+Deberías ver tu archivo aprendiendoGit.txt y tu commit inicial.
+----------------------------------------------------------------
+
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
+👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
+👌 te explico solo los pasos necesarios, de forma clara y ordenada 
+para Crear un repositorio en GitHub y subir tu repositorio LOCAL.
+
+
+🔹 Objetivo
+
+EJEMPLO: Subir tu archivo aprendiendoGit.txt (que está en C:\Users\TU_USUARIO\miRepoAprendizaje) 
+a un repositorio nuevo en GitHub llamado AprendiendoConGit.
+
+------------------------------------------
+🔸 PASO 1 — Crear el repositorio en GitHub
+------------------------------------------
+
+Entra a https://github.com/new
+
+Completa:
+
+Repository name: AprendiendoConGit
+
+Description: (opcional)
+
+Visibility: Public
+
+❌ NO marques “Initialize this repository with a README”
+(así podrás subir tu archivo local sin conflictos)
+
+🛎️ Pulsa Create repository:
+Se abrirá una página con instrucciones. 
+Copia la URL SSH o HTTPS que aparece (la usaremos en el paso 3).
+
+
+
+
+---------------------------------------------------------
+🔸 PASO 2 — Configurar Git en tu PC (solo la primera vez)
+---------------------------------------------------------
+
+Abre Git Bash en Windows y ejecuta:
+
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu-email@ejemplo.com"
+
+(Esto deja tu identidad configurada para todos tus proyectos)
+
+
+
+
+-----------------------------------------
+🔸 PASO 3 — Inicializar tu carpeta local
+-----------------------------------------
+
+Abre Git Bash dentro de tu carpeta miRepoAprendizaje
+(o abre Git Bash y navega con cd):
+
+cd ~/miRepoAprendizaje
+
+
+Después:
+
+git init
+git add aprendiendoGit.txt
+git commit -m "Primer commit: subo mi archivo de aprendizaje"
+
+
+
+
+------------------------------------------------
+🔸 PASO 4 — Conectar tu carpeta local con GitHub
+------------------------------------------------
+
+Usa una de estas dos opciones:
+
+✅ Opción A: Usar SSH (recomendado)
+
+Primero debes crear una clave SSH si aún no la tienes:
+
+Ejecuta:
+
+ssh-keygen -t ed25519 -C "tu-email@ejemplo.com"
+
+👉⏩ Dale Enter a todo.
+
+Después copia tu clave pública:
+
+clip < ~/.ssh/id_ed25519.pub
+
+
+Luego ve a GitHub → Settings → SSH and GPG keys → New SSH key
+Pega ahí tu clave y guarda.
+
+
+Por último, añade el remoto:
+
+git remote add origin git@github.com:TU_USUARIO/AprendiendoConGit.git
+
+¡¡¡¡¡¡¡¡¡¡¡¡ 🧐 !!!!!!!!!!
+🔁 Opción B: Usar HTTPS (más simple si no usas SSH)
+git remote add origin https://github.com/TU_USUARIO/AprendiendoConGit.git
+
+
+(GitHub te pedirá iniciar sesión o token la primera vez que hagas push.)
+
+
+
+
+----------------------------
+🔸 PASO 5 — Subir el archivo
+----------------------------
+git branch -M main
+git push -u origin main
+
+
+✅ Listo.
+
+Tu archivo ya estará disponible en:
+👉 https://github.com/TU_USUARIO/AprendiendoConGit
+
+
+
+👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+Al crear el repositorio me pide que agregue un archivo llamado ".gitignore" y una licencia, ¿Qué hago?.
+-------------------------------------------------------------------------------------------------------
+
+👏 Vamos al grano — aquí lo importante es no generar conflictos con tu carpeta local.
+
+
+
+🧩 Te salen tres opciones al crear el repositorio:
+
+✅ Add a README file
+
+✅ Add .gitignore
+
+✅ Choose a license
+
+
+
+Tú ya tienes una carpeta local que vas a subir, así que:
+
+🚫 Qué NO debes marcar
+
+🧐👉⏩ No marques ninguna de las tres opciones.
+
+❌ No README
+
+❌ No .gitignore
+
+❌ No LICENSE
+
+👉 Si marcas alguna, GitHub creará un primer commit, 
+y eso haría que tu historial local y el remoto no coincidan (te daría un error al hacer git push).
+
+
+
+📂 Qué pasará después
+
+Tu repositorio se creará vacío (sin commits).
+
+----------------------------------------------------------------
+En la siguiente pantalla, GitHub te mostrará comandos como estos:
+
+git remote add origin git@github.com:TU_USUARIO/AprendiendoConGit.git
+git branch -M main
+git push -u origin main
+----------------------------------------------------------------
+
+Esos son los que usarás en tu carpeta local (como te expliqué antes).
+
+
+💡 Más adelante (opcional)
+
+Una vez tu archivo esté subido, si lo deseas:
+
+Puedes crear un .gitignore (por ejemplo, para que Git ignore archivos temporales).
+→ En GitHub o desde local (echo "*.log" > .gitignore).
+
+Puedes añadir una licencia (si quieres permitir que otros usen tu trabajo).
+→ Botón Add file → Add license y eliges una (por ejemplo MIT).
+
+👉 Conclusión:
+En tu caso (proyecto local existente) → deja todas las casillas sin marcar y crea el repositorio vacío.
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
+
+--------------------------------------------------------------------
+¿Qué hace .gitignore y qué licencia elegir cuando llegue el momento?
+--------------------------------------------------------------------
+
+👍 Aquí va una explicación clara, corta y útil sobre cada uno:
+
+🧾 .gitignore — “archivos que Git debe ignorar”
+
+Sirve para decirle a Git qué archivos o carpetas NO debe subir al repositorio.
+Ejemplo: archivos temporales, contraseñas, configuraciones locales, etc.
+
+
+
+📘 Ejemplo típico
+
+Imagina que tienes archivos como:
+
+aprendiendoGit.txt
+notas.txt
+config.txt
+
+
+y no quieres subir config.txt.
+
+
+Creas un archivo llamado .gitignore y dentro escribes:
+
+config.txt
+
+
+Si quisieras ignorar todo un tipo de archivo (por ejemplo los .log):
+
+*.log
+
+
+O carpetas completas (por ejemplo temp/):
+
+temp/
+
+
+
+
+
+🧩 GitHub ofrece plantillas de .gitignore listas para distintos lenguajes
+(cuando creas un repo nuevo puedes elegir, por ejemplo: “Python”, “Node”, “VisualStudio”, etc.).
+
+👉 En tu caso, como es un repositorio de aprendizaje con texto, no es obligatorio tenerlo, pero puedes crearlo más adelante sin problema.
+
+⚖️ Licencia — “qué pueden hacer los demás con tu código”
+
+GitHub te deja añadir una licencia para decir:
+
+“Esto es público, pero aquí están las reglas para usarlo.”
+
+--------------------------------------------------------------------------------------------
+Las más comunes:
+Licencia	      Permite uso comercial	      Permite modificaciones	        Requiere atribución
+MIT	            ✅ Sí	                    ✅ Sí	                          ✅ Sí (nombrarte como autor)
+
+Apache 2.0	    ✅ Sí	                    ✅ Sí	                          ✅ Sí + exige aviso de cambios
+
+GPL v3	        ✅ Sí	                    ✅ Sí, pero deben publicar 
+                                               su código también (copyleft)	
+
+CC BY 4.0	      ✅ Sí	                    ✅ Sí	                          ✅ Sí (usada más para texto o material educativo)
+--------------------------------------------------------------------------------------------
+
+👉 En tu caso, como es un repositorio de aprendizaje y notas, podrías usar:
+
+MIT si no te importa que otros copien o modifiquen libremente.
+
+CC BY 4.0 si quieres que se te reconozca como autor de un material educativo.
+
+Si no pones ninguna licencia, por defecto nadie tiene permiso legal para reutilizar tu código (solo puede mirarlo en GitHub).
+
+
+_______________________________________________________________________________________________
+✅ Resumen rápido:
+
+Caso	                                              Qué hacer
+----                                                ---------
+
+🌿 Ya tienes carpeta local	                         ❌ No crear .gitignore ni licencia al inicio
+
+🌿 Quieres que Git ignore archivos	                 Añadir .gitignore después
+
+🌿 Quieres que otros puedan usar tu código	         Añadir una licencia (MIT o CC BY) después
+
+🌿 Proyecto personal o pruebas	                     No hace falta licencia
+_______________________________________________________________________________________________
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+👏 — es muy importante tener claro qué correo está configurado, porque Git lo usa para identificarte en cada commit y GitHub lo usa para vincular tus commits con tu cuenta.
+
+Aquí te explico cómo saber qué email tienes en cada sitio 👇
+
+🧩 1️⃣ Ver tu email configurado en Git local (tu PC)
+
+Abre Git Bash y ejecuta:
+
+git config --global user.email
+
+
+Esto te mostrará el correo que Git usa por defecto en todos tus proyectos.
+
+Si quieres ver el correo solo para un repositorio concreto (no el global), entra a la carpeta del repo y ejecuta:
+
+git config user.email
+
+-----------------------------------------------------------------------------------------------------------------
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+-----------------------------------------------------------------------------------------------------------------
