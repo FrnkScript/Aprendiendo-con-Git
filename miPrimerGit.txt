@@ -1,0 +1,273 @@
+Hola! Este documento recoge información para que puedas crear un repositorio Local (en tu PC)
+y lo subas a GitHub, puedas editarlo tú y otros usuarios de GitHub.
+
+Te explico todo paso a paso y con opciones. 
+
+Espero que te sea de ayuda. ☺️
+
+
+
+✍️ EMPEZAMOS!!
+
+1⏩⏩ ¿Debo crear una clave SSH? Esto es IMPORTANTE.
+
+Recomendación: sí si vas a trabajar desde la terminal (Linux / macOS / Git Bash Windows) 
+o si quieres evitar tener que introducir tokens/contraseñas cada vez.
+
+Ventajas SSH: autentificación sin escribir token cada push, es seguro y ampliamente usado.
+
+Alternativa: HTTPS + Personal Access Token (PAT) o usar GitHub Desktop / GitHub CLI. 
+Si prefieres PAT, GitHub ahora recomienda los fine-grained tokens cuando sea posible. 
+
+
+2⏩⏩ Cómo crear una clave SSH (opciones y comandos)
+
+Nota: usa ed25519 cuando tu sistema lo soporte (actualmente recomendado). 
+Si no, rsa -b 4096 es la alternativa.
+
+--------------------------------
+Comprobar si ya tienes una clave:
+
+`ls -al ~/.ssh`
+--------------------------------
+
+
+--------------------------------
+Generar (macOS / Linux / Git Bash):
+
+`ssh-keygen -t ed25519 -C "tu-email@example.com"`
+--------------------------------
+
+
+--------------------------------
+Arrancar el agente SSH y añadir la clave:
+
+# arrancar ssh-agent:
+`eval "$(ssh-agent -s)"`
+
+# añadir la clave al agente:
+`ssh-add ~/.ssh/id_ed25519`
+--------------------------------
+
+
+--------------------------------
+Copiar la clave pública al portapapeles:
+
+macOS: pbcopy < ~/.ssh/id_ed25519.pub
+
+Linux: xclip -sel clip < ~/.ssh/id_ed25519.pub (si tienes xclip) 
+👀 o también: cat ~/.ssh/id_ed25519.pub y copiar a mano
+
+Windows (Git Bash): clip < ~/.ssh/id_ed25519.pub
+--------------------------------
+
+
+--------------------------------
+Añadir la clave a GitHub
+
+En GitHub: esquina superior derecha → Settings → SSH and GPG keys → New SSH key → pega tu clave pública y guarda. 
+--------------------------------
+
+
+--------------------------------
+Probar conexión
+
+`ssh -T git@github.com`
+--------------------------------
+
+Si todo va bien verás un mensaje de bienvenida.
+-----------------------------------------------
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
+
+
+3⏩⏩ Crear el repositorio (opciones que verás en la interfaz web)
+
+Ir a GitHub y pulsar + → New repository (o https://github.com/new). 
+
+
+
+------------------------------------------------------
+Pasos / opciones que te aparecerán y decisión a tomar:
+------------------------------------------------------
+
+🌿 Owner: eliges tu cuenta personal o una organización (si perteneces a alguna). 
+
+
+🌿 Repository name: nombre corto y memorable.
+
+🌿 Description (opcional): una línea que describa el propósito.
+
+🌿 Visibility: Public (cualquiera lo puede ver / forkear) o Private 
+(solo quien tú autorices puede ver). Nota: tú puedes hacer público 
+y seguir siendo el único con control administrativo (no confundir ver vs controlar). 
+
+🌿 Initialize this repository with:
+
+🌿 README (crea el primer commit y muestra la página principal)
+
+🌿 .gitignore (elige plantilla para tu lenguaje)
+
+🌿 LICENSE (elige licencia si quieres permitir usos concretos)
+Si ya tienes un repo local con commits, no marques “Initialize with README” 
+para evitar conflictos: en ese caso crea el repo vacío y añade el remoto desde local (ver abajo). 
+
+🌿 Create repository → una vez creado GitHub te mostrará instrucciones (clone URL SSH y HTTPS).
+
+------------------------------------------------------------------------------------------------
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+--------------------------------
+1️⃣ Crear la carpeta y el archivo
+--------------------------------
+
+🌿 Abre la terminal.
+
+🌿 Crea una carpeta llamada "miPrimerRepositorio" y muévete dentro de ella:
+
+`mkdir miPrimerRepositorio
+cd miPrimerRepositorio`
+
+
+🌿 Crea un archivo de texto llamado miPrimerGit.txt:
+
+`echo "¡Hola, Git!" > miPrimerGit.txt`
+
+
+✍️ Nota: Esto crea el archivo y escribe “¡Hola, Git!” dentro de él.
+
+
+
+🌿 Abre la carpeta en VS Code para visualizar el archivo:
+
+code .
+---------------------------------------------------------
+
+
+------------------
+2️⃣ Configurar Git
+------------------
+
+🌿 Si es la primera vez que usas Git en este equipo, configura tu usuario y email:
+
+`git config --global user.name "TuNombre"`
+`git config --global user.email "tuemail@ejemplo.com"`
+
+Esto le dice a Git quién hace los cambios.
+------------------------------------------
+
+
+-------------------
+3️⃣ Inicializar Git
+-------------------
+
+🌿 Inicializa un repositorio Git dentro de la carpeta:
+
+`git init`
+
+
+🌿 Salida esperada:
+
+`Initialized empty Git repository in /ruta/miPrimerRepositorio/.git/`
+
+
+🌿 Ahora tu carpeta está lista para usar Git.
+---------------------------------------------
+
+
+------------------------------
+4️⃣ Ver el estado actual de Git
+------------------------------
+
+🌿 Usa git status para ver los cambios:
+
+`git status`
+
+
+🌿 Salida esperada:
+
+`Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        miPrimerGit.txt`
+
+
+Esto indica que Git ve el archivo pero aún no lo está siguiendo.
+-------------------------------------------------------------------
+
+
+-----------------------------------------------------------
+5️⃣ Agregar el archivo al área de preparación (staging area):
+-----------------------------------------------------------
+
+`git add miPrimerGit.txt`
+
+
+🌿 Verifica con git status:
+
+`git status`
+
+
+🌿 Salida esperada:
+
+`Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   miPrimerGit.txt`
+
+
+Ahora Git está listo para hacer commit de este archivo.
+-------------------------------------------------------
+
+
+--------------------------
+6️⃣ Hacer el primer commit
+--------------------------
+
+`git commit -m "Primer commit: agregamos miPrimerGit.txt"`
+
+
+🌿 Salida esperada:
+
+`[main (root-commit) 123abcd] Primer commit: agregamos miPrimerGit.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 miPrimerGit.txt`
+
+
+🎉 ¡Felicidades! Tu primer commit está hecho.
+
+
+
+-------------------------------
+7️⃣ Ver el historial de commits
+-------------------------------
+
+🌿 Para ver un historial resumido:
+
+ --------------------
+|  git log --oneline |
+ --------------------
+
+
+🌿 Salida esperada:
+
+ ---------------------------------------------------
+|  123abcd Primer commit: agregamos miPrimerGit.txt |
+ ---------------------------------------------------
+
+Esto muestra todos los commits en línea.
+----------------------------------------
+
+✅ Resumen visual en VS Code:
+
+🌿 La carpeta miPrimerRepositorio contiene miPrimerGit.txt.
+
+🌿 git status 🌿  muestra si hay cambios pendientes.
+
+🌿 git add 🌿 mueve archivos al staging area.
+
+🌿 git commit 🌿  guarda los cambios.
+
+🌿 git log --oneline 🌿  muestra los commits resumidos.
+
+----------------------------------------------------
+
