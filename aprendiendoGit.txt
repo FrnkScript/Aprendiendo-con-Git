@@ -1,9 +1,3 @@
-Hola! Este documento recoge información para que puedas crear un repositorio Local (en tu PC)
-y lo subas a GitHub, puedas editarlo tú y otros usuarios de GitHub.
-
-Te explico todo paso a paso y con opciones. 
-
-
 Antes de empezar a crear nuestro primer repositorio deberemos aprender qué es una clave ssh:
 En Git, una clave SSH sirve principalmente para autenticarte de manera segura con un servidor remoto 
 (como GitHub, GitLab o Bitbucket) cuando trabajas con repositorios, evitando tener que ingresar tu usuario y contraseña cada vez.
