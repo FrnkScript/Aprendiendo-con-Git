@@ -275,7 +275,8 @@ Esto muestra todos los commits en línea.
 para resolver un problema, para crear alguna funcionalidad nueva
 o para un objetivo concreto (un objetivo puntual).
 Cuando ese objetivo se alcanza entonces debemos guardar los cambios,
-subirlos a GitHub (con un `git push -u origin main`) y eliminar dicha rama.
+hacer un `git merge`y enviar esos cambios a la rama principalde nuestro repositorio local.
+Para subirlos a GitHub (con un `git push -u origin main`) y eliminar dicha rama.
 
 -----------------------------------------------------------------------------
 
@@ -378,6 +379,236 @@ Conectar con GitHub               `git remote add origin URL-de-GitHub`	      Vi
 Subir cambios  	                  `git push -u origin main`	                  Sube tus commits a GitHub.
 Actualizar desde GitHub           `git pull origin main`	                    Descarga los cambios más recientes.
 ------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------
+
+El pull request (a menudo abreviado como PR) es una de las partes más importantes 
+del flujo de trabajo en GitHub (y otras plataformas como GitLab o Bitbucket).
+
+Vamos a verlo de forma sencilla 👇
+
+...........................
+🧠 ¿Qué es un pull request?
+...........................
+
+Un pull request (PR) es una solicitud para fusionar tus cambios (commits) de una rama en otra, 
+normalmente de tu rama de trabajo hacia la rama principal (main o master) de un repositorio.
+
+
+👉 En otras palabras:
+
+“Oye, he hecho unos cambios en mi rama, ¿pueden revisarlos y unirlos al proyecto principal?”
+
+
+
+🧩 Cuándo se usa:
+
+Se usa principalmente cuando:
+
+🐥 Estás colaborando en equipo.
+
+🐥 Quieres que otra persona revise tu código antes de integrarlo.
+
+🐥 Quieres mantener el control y orden del proyecto (no fusionar cambios sin revisar).
+
+
+.................................
+⚙️ Flujo típico con pull request
+.................................
+
+Creas una rama para tus cambios:
+
+`git checkout -b nueva-funcionalidad`
+
+Esto separa tu trabajo del código principal.
+
+
+Haces cambios y los subes:
+
+`git add .`
+`git commit -m "Agrego nueva funcionalidad X"`
+`git push origin nueva-funcionalidad`
+
+
+Abres un Pull Request en GitHub:
+
+Vas al repositorio en GitHub.
+
+Verás un botón que dice “Compare & pull request”.
+
+Escribes una descripción de lo que hiciste.
+
+Envías el PR.
+
+El equipo revisa el código:
+Pueden dejar comentarios, pedir cambios o aprobarlo.
+
+Se hace el merge (fusión):
+Una vez aprobado, se combinan tus cambios con la rama principal:
+
+`git merge nueva-funcionalidad`
+
+.....................................................................................................
+💬 En resumen
+
+Acción	                            Qué hace
+Pull Request	                      Pide que tus cambios se revisen y se unan al código principal
+Objetivo	                          Revisar, discutir y aprobar código antes de fusionarlo
+Dónde                               Se hace	En GitHub (no en la terminal)
+Beneficio	                          Mejora la calidad del código, evita errores y fomenta colaboración
+.....................................................................................................
+
+
+💡 Analogía sencilla:
+
+Imagina que tú escribes un capítulo nuevo para un libro del equipo.
+Antes de que se publique, haces un pull request para que los demás autores lo revisen, 
+lo corrijan si es necesario, y finalmente lo integren al libro oficial 📖.
+
+
+Ejemplo completo de flujo de trabajo con ramas y un pull request paso a paso 
+(como lo harías tú desde la terminal hasta GitHub).
+
+Vamos a hacer un ejemplo completo paso a paso de cómo trabajar con ramas y crear un Pull Request (PR) en GitHub.
+
+
+Te voy a guiar como si fueras tú escribiendo en la terminal 🖥️
+(Este flujo es el más usado por equipos profesionales).
+
+-------------
+🚀 Escenario:
+-------------
+Tienes un repositorio en GitHub llamado mi-proyecto.
+Quieres agregar una nueva función o cambiar algo, pero sin romper el código principal.
+
+Así que trabajas en una rama nueva → haces cambios → los subes → creas un pull request.
+
+
+🧩 Paso a paso:
+
+
+1️⃣ Clona el repositorio desde GitHub
+
+Si aún no lo tienes en tu computadora:
+
+`git clone https://github.com/tu-usuario/mi-proyecto.git`
+
+✍️ Qué hace:
+Descarga una copia del repositorio remoto (en GitHub) a tu máquina local.
+
+
+2️⃣ Entra en la carpeta del proyecto
+`cd mi-proyecto`
+
+
+3️⃣ Crea una nueva rama para tus cambios
+`git checkout -b nueva-funcionalidad`
+
+✍️ Qué hace:
+
+`checkout -b` crea y cambia a una nueva rama llamada nueva-funcionalidad.
+Así trabajas separado del código principal (main).
+
+📘 Piensa: “Voy a trabajar en una copia paralela del proyecto.”
+
+
+4️⃣ Haz tus cambios
+
+Por ejemplo, editas o agregas un archivo:
+index.html, app.js, etc.
+
+
+5️⃣ Añade tus cambios al área de preparación
+`git add .`
+
+✍️ Qué hace:
+Prepara todos los archivos modificados para ser guardados (commiteados).
+
+
+6️⃣ Guarda los cambios en la rama
+`git commit -m "Agrego nueva funcionalidad X"`
+
+ ✍️ Qué hace:
+Crea una versión con tus cambios en el historial local de Git.
+
+
+7️⃣ Sube tu rama al repositorio remoto (GitHub)
+`git push origin nueva-funcionalidad`
+
+✍️ Qué hace:
+Envía tu rama y tus commits a GitHub.
+Ahora GitHub sabe que existe nueva-funcionalidad.
+
+
+8️⃣ Crea el Pull Request en GitHub
+
+Este paso se hace desde la web de GitHub 🧑‍💻:
+
+Ve a tu repositorio (https://github.com/tu-usuario/mi-proyecto).
+
+Verás un aviso arriba:
+“Compare & pull request” → haz clic.
+
+Escribe: Un título descriptivo (ej. “Agrego nueva funcionalidad X”).
+
+Una descripción de lo que hiciste.
+
+Revisa que sea de tu rama → hacia main.
+
+Haz clic en “Create pull request”.
+
+
+9️⃣ Espera revisión o aprueba tú mismo
+
+🐥 Si trabajas en equipo: otros revisan el código, pueden dejar comentarios o pedir cambios.
+
+🐥 Si trabajas solo: puedes aprobarlo tú mismo.
+
+
+🔟 Fusiona el PR (Merge)
+
+Una vez aprobado:
+
+🐥 Haz clic en el botón verde “Merge pull request”.
+
+🐥 Confirma con “Confirm merge”.
+
+🐥 (Opcional) Borra la rama si ya no la necesitas: “Delete branch”.
+
+
+
+✅ En resumen visual:
+
+🐥 # 1. Clonar repositorio
+git clone URL
+
+🐥 # 2. Entrar al proyecto
+cd mi-proyecto
+
+🐥 # 3. Crear y moverse a una nueva rama
+git checkout -b nueva-funcionalidad
+
+🐥 # 4. Hacer cambios, luego agregarlos
+git add .
+
+🐥 # 5. Guardarlos localmente
+git commit -m "Agrego nueva funcionalidad X"
+
+🐥 # 6. Subir la nueva rama a GitHub
+git push origin nueva-funcionalidad
+
+🐥 # 7. Crear Pull Request en GitHub (paso manual en la web)
+
+
+💡 Consejo profesional:
+Antes de crear el PR, asegúrate de tener tu rama actualizada con la última versión de main:
+
+`git checkout main`
+`git pull origin main`
+`git checkout nueva-funcionalidad`
+`git merge main`
+
+Así evitas conflictos antes de subir tu código.
 
 🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
 
