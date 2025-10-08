@@ -271,3 +271,113 @@ Esto muestra todos los commits en línea.
 
 ----------------------------------------------------
 
+🛎️ Cada rama que creamos tiene que ser creada específicamente 
+para resolver un problema, para crear alguna funcionalidad nueva
+o para un objetivo concreto (un objetivo puntual).
+Cuando ese objetivo se alcanza entonces debemos guardar los cambios,
+subirlos a GitHub (con un `git push -u origin main`) y eliminar dicha rama.
+
+-----------------------------------------------------------------------------
+
+
+👍 Vamos a ver cómo subir un archivo a un repositorio de GitHub, paso a paso, 
+y te explico qué hace cada comando de Git de forma clara y sencilla.
+
+................................
+🧩 1. Inicializar el repositorio
+`git init`
+................................
+
+Qué hace:
+Crea un nuevo repositorio de Git en la carpeta actual.
+Git empieza a “vigilar” los archivos de esa carpeta para registrar los cambios que hagas.
+
+📘 Ejemplo:
+Si estás en una carpeta llamada mi-proyecto, este comando crea una subcarpeta oculta .git 
+que guarda toda la información de versiones.
+
+..........................................................
+📄 2. Añadir los archivos al área de preparación (staging)
+`git add nombre_del_archivo`
+..........................................................
+
+O para agregar todos los archivos:
+`git add .`
+
+Qué hace:
+Le dice a Git qué archivos quieres incluir en la próxima versión (commit).
+Piensa en esto como “marcar” los archivos que se van a guardar.
+
+📘 Ejemplo:
+git add index.html → marca ese archivo.
+git add . → marca todos los archivos nuevos o modificados.
+
+.................................................
+💾 3. Guardar los cambios en el repositorio local
+`git commit -m "Mensaje descriptivo de los cambios que has realizado en dicho archivo"`
+.................................................
+
+Qué hace:
+Guarda una “foto” (snapshot) de los archivos añadidos.
+El mensaje entre comillas describe los cambios realizados.
+
+📘 Ejemplo:
+`git commit -m "Agrego el archivo index.html con el diseño inicial"`
+
+🧐 Esto no sube nada a GitHub todavía, solo guarda el historial en tu computadora.
+
+........................................................................
+🌐 4. Conectar tu repositorio local con el de GitHub:
+`git remote add origin https://github.com/usuario/nombre-repositorio.git`
+........................................................................
+
+Qué hace:
+Le dice a Git dónde está el repositorio remoto (en GitHub).
+“origin” es solo un nombre corto para esa URL.
+
+📘 Ejemplo:
+`git remote add origin https://github.com/maria/mi-proyecto.git`
+
+.......................................................
+⬆️ 5. Subir los archivos al repositorio remoto (GitHub)
+`git push -u origin main`
+.......................................................
+
+Qué hace:
+Envía (sube) tus commits al repositorio remoto (GitHub).
+
+🐥 origin → el nombre del remoto que agregaste.
+
+🐥 main → la rama (branch) principal del proyecto.
+
+🐥 El -u le dice a Git que recuerde esta conexión, 
+   para que la próxima vez puedas usar solo git push.
+
+📘 Ejemplo:
+`git push -u origin main`
+Sube todos tus commits guardados a la rama principal en GitHub.
+
+..............................................................
+🚀 6. Actualizar tu repositorio local desde GitHub (opcional)
+`git pull origin main`
+..............................................................
+
+Qué hace:
+Descarga los últimos cambios del repositorio remoto (GitHub) a tu copia local.
+Útil si trabajas en equipo y alguien más subió cambios.
+
+
+🔁 Resumen rápido
+
+Acción	                          Comando	                                    Qué hace
+
+Inicializar repositorio           `git init`	                                Empieza a usar Git en una carpeta.
+Agregar archivos                  `git add .`	                                Marca los archivos a guardar.
+Guardar cambios                   `git commit -m "mensaje"`	                  Crea una versión local.
+Conectar con GitHub               `git remote add origin URL-de-GitHub`	      Vincula tu carpeta local con GitHub.
+Subir cambios  	                  `git push -u origin main`	                  Sube tus commits a GitHub.
+Actualizar desde GitHub           `git pull origin main`	                    Descarga los cambios más recientes.
+------------------------------------------------------------------------------------------------------------------
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
