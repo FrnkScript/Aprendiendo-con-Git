@@ -858,3 +858,322 @@ Luego se fusionan (merge) para actualizar main
 
 🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
 
+El comando git stash es una herramienta muy útil de Git que te permite 
+guardar temporalmente tus cambios sin hacer un commit.
+
+Vamos a verlo paso a paso con ejemplos sencillos 👇
+
+🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩
+🧩 ¿Qué hace git stash?
+🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️
+
+👉 Guarda tus cambios actuales "en un cajón" temporal
+y deja tu carpeta limpia (como si no hubieras modificado nada).
+
+💬 En otras palabras:
+
+“Guarda lo que estaba haciendo para retomarlo después.”
+
+
+🧠 Cuándo se usa:
+
+Imagina esto:
+
+Estás trabajando en una nueva función, modificando varios archivos, pero de repente necesitas:
+
+Cambiar de rama (git checkout main)
+
+Hacer un pull o probar algo urgente
+
+⏩⏩ Git no te dejará cambiar de rama si tienes cambios sin guardar.
+Ahí entra en juego git stash.
+
+
+-----------------------
+⚙️ Ejemplo paso a paso
+-----------------------
+
+🔹 1️⃣ Estás trabajando y haces algunos cambios:
+
+`# Editas varios archivos
+index.html
+style.css`
+
+
+
+🔹 2️⃣ Git ve tus cambios
+`git status`
+
+
+Resultado:
+
+`modified: index.html
+modified: style.css`
+
+Pero aún no quieres hacer commit (no has terminado).
+
+
+
+🔹 3️⃣ Guardas los cambios temporalmente:
+`git stash`
+
+
+
+🧐✍️👉 Qué pasa:
+
+Git guarda tus modificaciones en una especie de “lista de stashes”.
+
+Tu carpeta vuelve al estado limpio, como si no hubieras cambiado nada.
+
+
+📘 Resultado:
+
+`Saved working directory and index state WIP on nueva-funcionalidad: 123abc`
+
+
+
+🔹 4️⃣ Ahora puedes cambiar de rama o hacer otras cosas
+`git checkout main`
+
+✅ Sin problemas, porque no hay cambios pendientes.
+
+
+
+🔹 5️⃣ Cuando termines, vuelves a tu rama y recuperas tus cambios
+`git checkout nueva-funcionalidad
+git stash pop`
+
+  👇 👇 👇 👇 👇
+💬 git stash pop:
+
+🐥 Recupera los cambios guardados en el último stash.
+
+🐥 Los aplica de nuevo a tu carpeta.
+
+🐥 Y los borra de la lista de stashes.
+
+🎉 Tus archivos vuelven tal como estaban antes de guardarlos.
+
+
+🧰 Variantes útiles
+
+Comando	                      Qué hace
+--------------------------------------
+git stash	                    Guarda tus cambios actuales
+git stash save "mensaje"	    Guarda con un nombre o descripción
+git stash list	              Muestra todos los stashes guardados
+git stash pop	                Recupera el último stash y lo elimina
+git stash apply	              Recupera el stash pero sin eliminarlo
+git stash drop	              Borra un stash específico
+git stash clear	              Borra todos los stashes guardados.
+
+
+
+------------------
+💡 Ejemplo visual:
+------------------
+
+🧠 Antes del stash:
+`trabajo/ (tienes cambios sin guardar)
+├── index.html (modificado)
+├── style.css (modificado)`
+
+
+🪣 git stash  → los cambios se guardan temporalmente
+trabajo/ (ahora limpio):
+`├── index.html (original)
+├── style.css (original)`
+
+
+📦 `git stash list` → muestra los cambios guardados
+stash@{0}: WIP on nueva-funcionalidad
+
+🔙 `git stash pop` → recupera tus cambios
+trabajo/ (de nuevo modificado):
+`├── index.html (modificado)
+├── style.css (modificado)`
+
+
+--------------
+🧠 En resumen
+
+Acción	                                      Comando	              Qué hace
+-------------------------------------------------------------------------------------------------------------------------------
+Guardar tus cambios temporalmente	            git stash	            Limpia tu directorio sin perder el trabajo.
+
+Ver los stashes guardados	                    git stash list	      Muestra tus “guardados rápidos”.
+
+Recuperar el último stash	                    git stash pop	        Aplica y borra el último guardado.
+
+Recuperar sin borrar	                        git stash apply	      Vuelve a aplicar los cambios, pero los mantiene guardados.
+-------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+  👇 👇 👇 👇 👇 👇 👇 👇 👇 
+👏 El comando `git cherry-pick`
+------------------------------
+
+Es otro de esos comandos muy poderosos (y a veces un poco mágicos 😅) en Git.
+Te permite tomar un commit específico de una rama y aplicarlo en otra, 
+sin traer todo el historial de esa rama.
+
+
+Vamos a verlo de forma clara, visual y con ejemplos reales 👇
+
+
+🍒 ¿Qué hace `git cherry-pick?`
+
+`git cherry-pick` copia un commit específico de una rama y lo aplica en la rama actual.
+
+
+💬 En palabras simples:
+
+“Quiero traer solo ese cambio, no toda la rama.”
+
+
+🧠 Cuándo se usa
+
+Algunas situaciones típicas:
+
+🚑 Traer una corrección urgente desde una rama a otra (por ejemplo, un bugfix de producción).
+
+🔁 Reutilizar un commit hecho en otra rama sin hacer un merge completo.
+
+💡 Aplicar un cambio puntual que hiciste antes, en un lugar diferente.
+
+----------------------
+⚙️ Ejemplo paso a paso
+----------------------
+
+🔹 Escenario:
+
+.....................
+Tienes dos ramas:
+
+main
+ └── A──B──C
+
+nueva-funcionalidad
+ └── D──E──F
+.....................
+
+Supón que el commit E (de la rama nueva-funcionalidad) corrige un error importante y quieres llevar solo ese commit a main.
+
+
+🔹 1️⃣ Ve a la rama donde quieres aplicar el cambio
+`git checkout main`
+
+🔹 2️⃣ Usa git cherry-pick con el ID del commit
+
+Primero, obtén el ID del commit (por ejemplo, con git log):
+`git log`
+
+
+Verás algo como:
+
+`commit a1b2c3d4e5f6 (HEAD -> nueva-funcionalidad)
+Author: Tú <tu@email.com>
+Message: Corrijo error en validación`
+
+
+Luego, ejecutas:
+`git cherry-pick a1b2c3d4e5f6`
+
+
+
+🔹 3️⃣ Git aplica ese commit en main
+
+Resultado:
+
+main
+ └── A──B──C──E'
+
+👉 El commit E' es una copia exacta de E (mismo contenido, diferente hash).
+
+
+
+💡 Visualmente:
+
+Antes del cherry-pick:
+`main:                A──B──C
+nueva-funcionalidad:      D──E──F`
+
+
+Después del cherry-pick:
+`main:                A──B──C──E'
+nueva-funcionalidad:      D──E──F`
+
+✅ Solo el commit E fue traído a main — sin afectar los demás (D, F).
+
+
+
+🧩 Si hay conflictos…
+
+Si el commit que traes modifica líneas que también fueron cambiadas en tu rama actual, 
+Git te mostrará un mensaje de conflicto:
+`error: could not apply a1b2c3d4e5f6... Corrijo error en validación`
+
+
+
+Entonces:
+
+🐥 Editas los archivos para resolver el conflicto.
+
+🐥 Luego haces:
+
+`git add .
+git cherry-pick --continue`
+
+
+🐥 Y Git finalizará el proceso.
+
+
+
+-------------------
+🧰 Variantes útiles
+-------------------
+
+Comando	                              Qué hace
+--------------------------------------------------------------------------------------------
+`git cherry-pick <hash>`	              Aplica un commit específico
+
+`git cherry-pick <hash1> <hash2>`	      Aplica varios commits a la vez
+
+`git cherry-pick <hash1>..<hash2>`      Aplica un rango de commits
+
+`git cherry-pick --abort`	              Cancela el cherry-pick (si hay errores o conflictos)
+
+`git cherry-pick --continue`	          Continúa después de resolver conflictos
+--------------------------------------------------------------------------------------------
+
+
+⚠️ Cuándo NO usarlo:
+
+🐥 Evita git cherry-pick cuando:
+
+🐥 Quieras fusionar ramas completas → usa git merge o git rebase.
+
+🐥 Estés trabajando en un flujo con muchos colaboradores (puede duplicar commits).
+
+
+
+✅ En resumen
+
+Acción	                              Comando	                        Qué hace
+------------------------------------------------------------------------------------------------------------------
+Copiar un commit de otra rama	        git cherry-pick <hash>	        Aplica un commit específico a tu rama actual
+Ver commits disponibles	              git log	                        Muestra el historial y los hashes
+Resolver conflictos	                  git cherry-pick --continue	    Finaliza tras resolver conflictos
+------------------------------------------------------------------------------------------------------------------
+
+
+💡 Analogía:
+Imagina que tienes dos árboles de cerezas 🌳.
+Con `git cherry-pick`, eliges una cereza específica 🍒 (un commit) del otro árbol 
+y la colocas en el tuyo — sin traer todas las ramas.
+
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
