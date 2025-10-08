@@ -1174,6 +1174,155 @@ Imagina que tienes dos árboles de cerezas 🌳.
 Con `git cherry-pick`, eliges una cereza específica 🍒 (un commit) del otro árbol 
 y la colocas en el tuyo — sin traer todas las ramas.
 
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+
+git bisect es un comando muy útil y potente que sirve para encontrar 
+en qué commit apareció un error o bug dentro de un proyecto.
+
+Vamos a explicarlo de forma sencilla y con un ejemplo realista 👇
+
+------------------------
+🧠 ¿Qué hace git bisect?
+------------------------
+
+git bisect busca el commit que introdujo un error, usando búsqueda binaria (mitad y mitad).
+
+
+💬 En palabras simples:
+
+“Git prueba versiones anteriores de tu código una por una, hasta encontrar el commit exacto donde empezó a fallar.”
+
+
+🧩 Cuándo se usa:
+
+Imagina esto:
+
+Tu proyecto funcionaba bien ayer, pero hoy algo se rompió 😩
+Sabes que el error apareció en algún commit reciente, pero no sabes cuál.
+
+
+👉 En lugar de revisar manualmente 100 commits,
+git bisect te ayuda a encontrar exactamente cuál commit introdujo el fallo.
+
+
+----------------------
+⚙️ Ejemplo paso a paso
+----------------------
+
+Supongamos que tienes un historial así:
+
+A — B — C — D — E — F — G
+
+
+Y sabes:
+
+🐥 En el commit B → todo funcionaba bien. ✅
+
+🐥 En el commit G → el programa falla. ❌
+
+🐥 Tú quieres saber en qué commit exacto entre B y G apareció el error.
+
+
+🔹 1️⃣ Inicia el modo bisect
+`git bisect start`
+
+👉 Esto le dice a Git:
+“Voy a empezar una búsqueda para encontrar el commit malo.”
+
+
+🔹 2️⃣ Indica el commit malo
+`git bisect bad`
+
+👉 Esto marca el commit actual (por ejemplo, G) como "malo" — el que contiene el error.
+
+
+🔹 3️⃣ Indica un commit bueno
+`git bisect good B`
+
+👉 Aquí le dices a Git qué commit sabías que funcionaba bien.
+
+
+🔹 4️⃣ Git empieza la búsqueda automática:
+
+Git ahora saltará al punto medio entre los dos commits (por ejemplo, el commit D) y te dirá:
+
+`Bisecting: 3 revisions left to test after this (roughly 2 steps)`
+
+
+🔹 5️⃣ Pruebas tu programa
+
+👉 Si el error está presente → ejecutas:
+
+`git bisect bad`
+
+
+👉 Si todo funciona bien → ejecutas:
+
+`git bisect good`
+
+
+👉 Git volverá a saltar al siguiente punto medio automáticamente.
+
+
+🔹 6️⃣ Git repite el proceso
+
+Cada vez que le dices “bueno” o “malo”, Git descarta la mitad de los commits.
+Así, en muy pocos pasos (logarítmicamente), encuentra el commit exacto que introdujo el bug.
+
+
+🔹 7️⃣ Cuando Git encuentra el culpable 😈
+
+Git te mostrará algo como:
+
+`a1b2c3d4e5f6 is the first bad commit
+Author: Juan Pérez
+Message: "Cambio el cálculo de precios"`
+
+
+👉 ¡Listo!
+Ese commit es el que introdujo el error.
+
+
+🔹 8️⃣ Salir del modo bisect
+`git bisect reset`
+
+
+👉 Esto te devuelve a la rama y estado original.
+
+
+💡 Visualmente
+A — B — C — D — E — F — G
+      ↑           ↑     ↑
+   good ✅     test 🔍  bad ❌
+
+👉 Git prueba mitad por mitad hasta encontrar el commit exacto que rompe algo.
+
+
+
+👉 👉 🧰 Resumen rápido
+
+Comando	                      Qué hace
+-----------------------------------------------------------------------------------
+`git bisect start`            	Inicia la búsqueda.
+
+`git bisect bad`	              Marca el commit actual como malo.
+
+`git bisect good <hash>`	      Marca un commit como bueno.
+
+`git bisect reset`	            Sale del modo bisect.
+
+(entre medio)	Git prueba commits hasta encontrar el culpable
+
+
+
+⚡ En resumen sencillo:
+
+🔍 git bisect es como un detective automático:
+te ayuda a encontrar cuál commit introdujo un error,
+probando versiones anteriores del proyecto mitad por mitad hasta dar con el culpable.
+
+
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
 
