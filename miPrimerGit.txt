@@ -1,0 +1,1910 @@
+Hola! Este documento recoge información para que puedas crear un repositorio Local (en tu PC)
+y lo subas a GitHub, puedas editarlo tú y otros usuarios de GitHub.
+
+Te explico todo paso a paso y con opciones.
+
+Espero que te sea de ayuda. ☺️
+
+✍️ EMPEZAMOS!!
+
+1⏩⏩ ¿Debo crear una clave SSH? Esto es IMPORTANTE.
+
+Recomendación: sí si vas a trabajar desde la terminal (Linux / macOS / Git Bash Windows)
+o si quieres evitar tener que introducir tokens/contraseñas cada vez.
+
+Ventajas SSH: autentificación sin escribir token cada push, es seguro y ampliamente usado.
+
+Alternativa: HTTPS + Personal Access Token (PAT) o usar GitHub Desktop / GitHub CLI.
+Si prefieres PAT, GitHub ahora recomienda los fine-grained tokens cuando sea posible.
+
+2⏩⏩ Cómo crear una clave SSH (opciones y comandos)
+
+Nota: usa ed25519 cuando tu sistema lo soporte (actualmente recomendado).
+Si no, rsa -b 4096 es la alternativa.
+
+---
+
+Comprobar si ya tienes una clave:
+
+## `ls -al ~/.ssh`
+
+---
+
+Generar (macOS / Linux / Git Bash):
+
+## `ssh-keygen -t ed25519 -C "tu-email@example.com"`
+
+---
+
+Arrancar el agente SSH y añadir la clave:
+
+# arrancar ssh-agent:
+
+`eval "$(ssh-agent -s)"`
+
+# añadir la clave al agente:
+
+## `ssh-add ~/.ssh/id_ed25519`
+
+---
+
+Copiar la clave pública al portapapeles:
+
+macOS: `pbcopy < ~/.ssh/id_ed25519.pub`
+
+Linux: `xclip -sel clip < ~/.ssh/id_ed25519.pub` (si tienes xclip).
+👀 o también: `cat ~/.ssh/id_ed25519.pub` y copiar a mano
+
+## Windows (Git Bash): `clip < ~/.ssh/id_ed25519.pub`
+
+---
+
+Añadir la clave a GitHub
+
+## En GitHub: esquina superior derecha → Settings → SSH and GPG keys → New SSH key → pega tu clave pública y guarda.
+
+---
+
+Probar conexión
+
+## `ssh -T git@github.com`
+
+## Si todo va bien verás un mensaje de bienvenida.
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+3⏩⏩ Crear el repositorio (opciones que verás en la interfaz web)
+
+Ir a GitHub y pulsar + → New repository (o https://github.com/new).
+
+---
+
+## Pasos / opciones que te aparecerán y decisión a tomar:
+
+🌿 Owner: eliges tu cuenta personal o una organización (si perteneces a alguna).
+
+🌿 Repository name: nombre corto y memorable.
+
+🌿 Description (opcional): una línea que describa el propósito.
+
+🌿 Visibility: Public (cualquiera lo puede ver / forkear) o Private
+(solo quien tú autorices puede ver). Nota: tú puedes hacer público
+y seguir siendo el único con control administrativo (no confundir ver vs controlar).
+
+🌿 Initialize this repository with:
+
+🌿 README (crea el primer commit y muestra la página principal)
+
+🌿 .gitignore (elige plantilla para tu lenguaje)
+
+🌿 LICENSE (elige licencia si quieres permitir usos concretos)
+Si ya tienes un repo local con commits, no marques “Initialize with README”
+para evitar conflictos: en ese caso crea el repo vacío y añade el remoto desde local (ver abajo).
+
+🌿 Create repository → una vez creado GitHub te mostrará instrucciones (clone URL SSH y HTTPS).
+
+---
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+---
+
+## 1️⃣ Crear la carpeta y el archivo
+
+🌿 Abre la terminal.
+
+🌿 Crea una carpeta llamada "miPrimerRepositorio" y muévete dentro de ella:
+
+`mkdir miPrimerRepositorio
+cd miPrimerRepositorio`
+
+🌿 Crea un archivo de texto llamado miPrimerGit.txt:
+
+`echo "¡Hola, Git!" > miPrimerGit.txt`
+
+✍️ Nota: Esto crea el archivo y escribe “¡Hola, Git!” dentro de él.
+
+🌿 Abre la carpeta en VS Code para visualizar el archivo:
+
+## code .
+
+---
+
+## 2️⃣ Configurar Git
+
+🌿 Si es la primera vez que usas Git en este equipo, configura tu usuario y email:
+
+`git config --global user.name "TuNombre"`
+`git config --global user.email "tuemail@ejemplo.com"`
+
+## Esto le dice a Git quién hace los cambios.
+
+---
+
+## 3️⃣ Inicializar Git
+
+🌿 Inicializa un repositorio Git dentro de la carpeta:
+
+`git init`
+
+🌿 Salida esperada:
+
+`Initialized empty Git repository in /ruta/miPrimerRepositorio/.git/`
+
+## 🌿 Ahora tu carpeta está lista para usar Git.
+
+---
+
+## 4️⃣ Ver el estado actual de Git
+
+🌿 Usa git status para ver los cambios:
+
+`git status`
+
+🌿 Salida esperada:
+
+`Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        miPrimerGit.txt`
+
+## Esto indica que Git ve el archivo pero aún no lo está siguiendo.
+
+---
+
+## 5️⃣ Agregar el archivo al área de preparación (staging area):
+
+`git add miPrimerGit.txt`
+
+🌿 Verifica con git status:
+
+`git status`
+
+🌿 Salida esperada:
+
+`Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   miPrimerGit.txt`
+
+## Ahora Git está listo para hacer commit de este archivo.
+
+---
+
+## 6️⃣ Hacer el primer commit
+
+```git commit -m "Primer commit: agregamos miPrimerGit.txt"```
+
+🌿 Salida esperada:
+
+```[main (root-commit) 123abcd] Primer commit: agregamos miPrimerGit.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 miPrimerGit.txt```
+
+🎉 ¡Felicidades! Tu primer commit está hecho.
+
+---
+
+## 7️⃣ Ver el historial de commits
+
+🌿 Para ver un historial resumido:
+
+---
+
+| git log --oneline |
+
+---
+
+🌿 Salida esperada:
+
+---
+
+| 123abcd Primer commit: agregamos miPrimerGit.txt |
+
+---
+
+## Esto muestra todos los commits en línea.
+
+✅ Resumen visual en VS Code:
+
+🌿 La carpeta miPrimerRepositorio contiene miPrimerGit.txt.
+
+🌿 git status 🌿 muestra si hay cambios pendientes.
+
+🌿 git add 🌿 mueve archivos al staging area.
+
+🌿 git commit 🌿 guarda los cambios.
+
+🌿 git log --oneline 🌿 muestra los commits resumidos.
+
+---
+
+🛎️ Cada rama que creamos tiene que ser creada específicamente
+para resolver un problema, para crear alguna funcionalidad nueva
+o para un objetivo concreto.
+
+---
+
+👍 Vamos a ver cómo subir un archivo a un repositorio de GitHub, paso a paso,
+y te explico qué hace cada comando de Git de forma clara y sencilla.
+
+................................
+🧩 1. Inicializar el repositorio
+```git init```
+................................
+
+Qué hace:
+Crea un nuevo repositorio de Git en la carpeta actual.
+Git empieza a “vigilar” los archivos de esa carpeta para registrar los cambios que hagas.
+
+📘 Ejemplo:
+Si estás en una carpeta llamada mi-proyecto, este comando crea una subcarpeta oculta .git
+que guarda toda la información de versiones.
+
+..........................................................
+📄 2. Añadir los archivos al área de preparación (staging)
+`git add nombre_del_archivo`
+..........................................................
+
+O para agregar todos los archivos:
+`git add .`
+
+Qué hace:
+Le dice a Git qué archivos quieres incluir en la próxima versión (commit).
+Piensa en esto como “marcar” los archivos que se van a guardar.
+
+📘 Ejemplo:
+git add index.html → marca ese archivo.
+git add . → marca todos los archivos nuevos o modificados.
+
+.................................................
+💾 3. Guardar los cambios en el repositorio local
+`git commit -m "Mensaje descriptivo de los cambios que has realizado en dicho archivo"`
+.................................................
+
+Qué hace:
+Guarda una “foto” (snapshot) de los archivos añadidos.
+El mensaje entre comillas describe los cambios realizados.
+
+📘 Ejemplo:
+`git commit -m "Agrego el archivo index.html con el diseño inicial"`
+
+🧐 Esto no sube nada a GitHub todavía, solo guarda el historial en tu computadora.
+
+........................................................................
+🌐 4. Conectar tu repositorio local con el de GitHub:
+`git remote add origin https://github.com/usuario/nombre-repositorio.git`
+........................................................................
+
+Qué hace:
+Le dice a Git dónde está el repositorio remoto (en GitHub).
+“origin” es solo un nombre corto para esa URL.
+
+📘 Ejemplo:
+`git remote add origin https://github.com/maria/mi-proyecto.git`
+
+.......................................................
+⬆️ 5. Subir los archivos al repositorio remoto (GitHub)
+`git push -u origin main`
+.......................................................
+
+Qué hace:
+Envía (sube) tus commits al repositorio remoto (GitHub).
+
+🐥 origin → el nombre del remoto que agregaste.
+
+🐥 main → la rama (branch) principal del proyecto.
+
+🐥 El -u le dice a Git que recuerde esta conexión,
+para que la próxima vez puedas usar solo git push.
+
+📘 Ejemplo:
+`git push -u origin main`
+Sube todos tus commits guardados a la rama principal en GitHub.
+
+..............................................................
+🚀 6. Actualizar tu repositorio local desde GitHub (opcional)
+`git pull origin main`
+..............................................................
+
+🛎️ Qué hace:
+Descarga los últimos cambios del repositorio remoto (GitHub) a tu copia local.
+Útil si trabajas en equipo y alguien más subió cambios.
+
+---
+
+## 🔁 Resumen rápido
+
+🛎️Acción                            Comando                                     Qué hace
+
+Inicializar repositorio-------> ```git init``` -------------------------------> Empieza a usar Git en una carpeta.
+Agregar archivos--------------> ```git add .``` ------------------------------> Marca los archivos a guardar.
+Guardar cambios --------------> ```git commit -m "mensaje"``` ----------------> Crea una versión local.
+Conectar con GitHub ----------> ```git remote add origin URL-de-GitHub``` ----> Vincula tu carpeta local con GitHub.
+Subir cambios ----------------> ```git push -u origin main``` ----------------> Sube tus commits a GitHub.
+Actualizar desde GitHub ------> ```git pull origin main``` -------------------> Descarga los cambios más recientes.
+
+---
+
+El pull request (a menudo abreviado como PR) es una de las partes más importantes
+del flujo de trabajo en GitHub (y otras plataformas como GitLab o Bitbucket).
+
+Vamos a verlo de forma sencilla 👇
+
+...........................
+🧠 ¿Qué es un pull request?
+...........................
+
+Un pull request (PR) es una solicitud para fusionar tus cambios (commits) de una rama en otra,
+normalmente de tu rama de trabajo hacia la rama principal (main o master) de un repositorio.
+
+👉 En otras palabras:
+
+“Oye, he hecho unos cambios en mi rama, ¿pueden revisarlos y unirlos al proyecto principal?”
+
+🧩 Cuándo se usa:
+
+Se usa principalmente cuando:
+
+🐥 Estás colaborando en equipo.
+
+🐥 Quieres que otra persona revise tu código antes de integrarlo.
+
+🐥 Quieres mantener el control y orden del proyecto (no fusionar cambios sin revisar).
+
+.................................
+⚙️ Flujo típico con pull request
+.................................
+
+Creas una rama para tus cambios:
+
+```git checkout -b nueva-funcionalidad```
+
+Esto separa tu trabajo del código principal.
+
+Haces cambios y los subes:
+
+```git add .```
+```git commit -m "Agrego nueva funcionalidad X"```
+```git push origin nueva-funcionalidad```
+
+Abres un Pull Request en GitHub:
+
+Vas al repositorio en GitHub.
+
+Verás un botón que dice “Compare & pull request”.
+
+Escribes una descripción de lo que hiciste.
+
+Envías el PR.
+
+El equipo revisa el código:
+Pueden dejar comentarios, pedir cambios o aprobarlo.
+
+Se hace el merge (fusión):
+Una vez aprobado, se combinan tus cambios con la rama principal:
+
+```git merge nueva-funcionalidad```
+
+💬 En resumen
+
+Acción y Qué hace
+Pull Request ----------> Pide que tus cambios se revisen y se unan al código principal
+
+Objetivo Revisar, discutir y aprobar código antes de fusionarlo
+
+Dónde Se hace En GitHub (no en la terminal)
+
+## Beneficio. Mejora la calidad del código, evita errores y fomenta colaboración
+
+💡 Analogía sencilla:
+
+Imagina que tú escribes un capítulo nuevo para un libro del equipo.
+Antes de que se publique, haces un pull request para que los demás autores lo revisen,
+lo corrijan si es necesario, y finalmente lo integren al libro oficial 📖.
+
+Ejemplo completo de flujo de trabajo con ramas y un pull request paso a paso
+(como lo harías tú desde la terminal hasta GitHub).
+
+Vamos a hacer un ejemplo completo paso a paso de cómo trabajar con ramas y crear un Pull Request (PR) en GitHub.
+
+Te voy a guiar como si fueras tú escribiendo en la terminal 🖥️
+(Este flujo es el más usado por equipos profesionales).
+
+---
+
+ 🚀 Escenario:
+
+Tienes un repositorio en GitHub llamado mi-proyecto.
+Quieres agregar una nueva función o cambiar algo, pero sin romper el código principal.
+
+Así que trabajas en una rama nueva → haces cambios → los subes → creas un pull request.
+
+🧩 Paso a paso:
+
+1️⃣ Clona el repositorio desde GitHub
+
+Si aún no lo tienes en tu computadora:
+
+`git clone https://github.com/tu-usuario/mi-proyecto.git`
+
+✍️ Qué hace:
+Descarga una copia del repositorio remoto (en GitHub) a tu máquina local.
+
+2️⃣ Entra en la carpeta del proyecto
+`cd mi-proyecto`
+
+3️⃣ Crea una nueva rama para tus cambios
+`git checkout -b nueva-funcionalidad`
+
+✍️ Qué hace:
+
+`checkout -b` crea y cambia a una nueva rama llamada nueva-funcionalidad.
+Así trabajas separado del código principal (main).
+
+📘 Piensa: “Voy a trabajar en una copia paralela del proyecto.”
+
+4️⃣ Haz tus cambios
+
+Por ejemplo, editas o agregas un archivo:
+index.html, app.js, etc.
+
+5️⃣ Añade tus cambios al área de preparación
+`git add .`
+
+✍️ Qué hace:
+Prepara todos los archivos modificados para ser guardados (commiteados).
+
+6️⃣ Guarda los cambios en la rama
+`git commit -m "Agrego nueva funcionalidad X"`
+
+✍️ Qué hace:
+Crea una versión con tus cambios en el historial local de Git.
+
+7️⃣ Sube tu rama al repositorio remoto (GitHub)
+`git push origin nueva-funcionalidad`
+
+✍️ Qué hace:
+Envía tu rama y tus commits a GitHub.
+Ahora GitHub sabe que existe nueva-funcionalidad.
+
+8️⃣ Crea el Pull Request en GitHub
+
+Este paso se hace desde la web de GitHub 🧑‍💻:
+
+Ve a tu repositorio (https://github.com/tu-usuario/mi-proyecto).
+
+Verás un aviso arriba:
+“Compare & pull request” → haz clic.
+
+Escribe: Un título descriptivo (ej. “Agrego nueva funcionalidad X”).
+
+Una descripción de lo que hiciste.
+
+Revisa que sea de tu rama → hacia main.
+
+Haz clic en “Create pull request”.
+
+9️⃣ Espera revisión o aprueba tú mismo
+
+🐥 Si trabajas en equipo: otros revisan el código, pueden dejar comentarios o pedir cambios.
+
+🐥 Si trabajas solo: puedes aprobarlo tú mismo.
+
+🔟 Fusiona el PR (Merge)
+
+Una vez aprobado:
+
+🐥 Haz clic en el botón verde “Merge pull request”.
+
+🐥 Confirma con “Confirm merge”.
+
+🐥 (Opcional) Borra la rama si ya no la necesitas: “Delete branch”.
+
+✅ En resumen visual:
+
+🐥 # 1. Clonar repositorio
+git clone URL
+
+🐥 # 2. Entrar al proyecto
+cd mi-proyecto
+
+🐥 # 3. Crear y moverse a una nueva rama
+git checkout -b nueva-funcionalidad
+
+🐥 # 4. Hacer cambios, luego agregarlos
+git add .
+
+🐥 # 5. Guardarlos localmente
+git commit -m "Agrego nueva funcionalidad X"
+
+🐥 # 6. Subir la nueva rama a GitHub
+git push origin nueva-funcionalidad
+
+🐥 # 7. Crear Pull Request en GitHub (paso manual en la web)
+
+💡 Consejo profesional:
+Antes de crear el PR, asegúrate de tener tu rama actualizada con la última versión de main:
+
+```git checkout main```
+```git pull origin main```
+```git checkout nueva-funcionalidad```
+```git merge main```
+
+Así evitas conflictos antes de subir tu código.
+
+👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇 👇
+
+😎 Vamos a ver un ejemplo práctico y realista con archivos para entender exactamente qué pasa cuando haces:
+
+```git checkout main
+git pull origin main
+git checkout nueva-funcionalidad
+git merge main```
+
+## 🧩 Escenario
+
+Supongamos que tú y tu compañero están trabajando en el mismo proyecto de GitHub llamado mi-proyecto.
+
+Tu compañero hizo un cambio en main, y tú estás trabajando en tu propia rama nueva-funcionalidad.
+Vamos a ver cómo se sincroniza todo.
+
+---
+
+## 🧱 Estado inicial
+
+En GitHub (main):
+
+Tu compañero ya hizo este cambio y lo subió:
+
+## `index.html
+
+<h1>Bienvenido al sitio web</h1>
+<p>Versión 2.0</p>`
+
+En tu computadora, en tu rama nueva-funcionalidad:
+
+Todavía tienes una versión vieja:
+
+## `index.html
+
+<h1>Bienvenido al sitio web</h1>
+<p>Versión 1.0</p>`
+
+Y además, tú estás agregando un nuevo archivo:
+
+## `contacto.html
+
+<h2>Página de contacto</h2>`
+
+---------------
+🔧 Paso a paso:
+---------------
+
+1️⃣ Cambias a la rama principal:
+```git checkout main```
+
+💬 Ahora estás en la rama main local (la copia que tienes en tu PC).
+
+2️⃣ Actualizas tu rama principal con GitHub:
+```git pull origin main```
+
+💬 Git descarga los últimos cambios del servidor (los de tu compañero).
+
+📁 Resultado:
+Tu rama main local ahora tiene la versión actualizada:
+
+## ```index.html
+
+<h1>Bienvenido al sitio web</h1>
+<p>Versión 2.0</p>```
+
+3️⃣ Vuelves a tu rama de trabajo:
+```git checkout nueva-funcionalidad```
+
+💬 Ahora estás de nuevo en tu rama, con tus archivos (todavía tienes Versión 1.0).
+
+4️⃣ Fusionas los cambios de main:
+```git merge main```
+
+💬 Git compara tu rama con la rama main y actualiza los archivos.
+
+📁 Resultado final:
+Tu rama nueva-funcionalidad ahora tiene:
+
+## ```index.html
+
+<h1>Bienvenido al sitio web</h1>
+<p>Versión 2.0</p>
+
+## contacto.html
+
+<h2>Página de contacto</h2>```
+
+✅ Ahora tu rama está actualizada con la última versión del proyecto y mantiene tus cambios.
+
+💡 Si hubiera conflictos...
+
+Supón que tú también habías cambiado la misma línea en index.html, por ejemplo:
+
+Tu versión:
+
+```<p>Versión 1.1 (en progreso)</p>`
+
+Y en main está:
+
+`<p>Versión 2.0</p>```
+
+Cuando hagas el git merge main, Git te avisará de un conflicto:
+
+```CONFLICT (content): Merge conflict in index.html```
+
+Y dentro del archivo verás algo así:
+
+<h1>Bienvenido al sitio web</h1>
+<<<<<<< HEAD
+<p>Versión 1.1 (en progreso)</p>
+=======
+<p>Versión 2.0</p>
+>>>>>>> main
+
+💬 Eso significa:
+
+Lo que está entre <<<<<<< HEAD y ======= es tu versión.
+
+Lo que está entre ======= y >>>>>>> main es la versión del main.
+
+Tú decides cuál conservar (o fusionarlas manualmente), guardas el archivo, y luego haces:
+
+```git add index.html
+git commit```
+
+Y Git guardará la versión corregida.
+
+---
+
+## ✅ Resumen visual
+
+## Pasos:
+
+Comando                                 Qué pasa                         Resultado
+
+1 git checkout main ....................Vas a la rama principal .........Preparas para actualizar.
+
+2 git pull origin main .................Descargas cambios de GitHub .....Tu main está actualizado.
+
+3 git checkout nueva-funcionalidad .....Regresas a tu rama ..............Preparas tu trabajo.
+
+4 git merge main .......................Fusionas main con tu rama .......Tienes lo más nuevo y tus cambios.
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+EVITAR TRABAJAR EN LA RAMA PRINCIPAL. LAS RAMAS SON PARA CREAR FUNCIONALIDADES DE UNA APLICACIÓN.
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+Aquí tienes un diagrama visual tipo líneas de tiempo y ramas que muestra
+todo el proceso desde que creas una rama, haces cambios,
+y luego creas un Pull Request (PR) hasta hacer el merge en main.
+
+🧭 Diagrama de flujo del Pull Request (rama → PR → merge):
+
+               ┌──────────────────────────────────────────────┐
+               │                Repositorio GitHub             │
+               └──────────────────────────────────────────────┘
+
+Tiempo ↓
+
+main ──●──────────────●──────────────●───────────────●───────────────▶
+^ ^ ^ ^
+│ │ │ │
+│ │ │ └─── Merge del PR (se actualiza main)
+│ │ │
+│ │ └── Pull Request creado y revisado
+│ │
+│ └── Cambios subidos a GitHub desde rama
+│
+└── Rama creada desde main
+
+nueva-funcionalidad
+\
+ ●──────────────●──────────────●───────────────▶
+│ │ │
+│ │ └── `git push origin nueva-funcionalidad`
+│ │
+│ └── `git commit -m "Agrego nueva funcionalidad X"`
+│
+└── `git checkout -b nueva-funcionalidad`
+
+(Después del merge)
+main ───────────────────────────────────────────────────●────────────▶
+▲
+│
+Rama fusionada: código de `nueva-funcionalidad`
+
+🧩 Explicación visual paso a paso
+
+## Etapa Acción Qué pasa
+
+🟢 1 `git checkout -b nueva-funcionalidad` Creas una nueva rama desde main.
+
+🟡 2 `git add . + git commit -m "mensaje"` Guardas tus cambios locales en esa rama.
+
+🟠 3 `git push origin nueva-funcionalidad` Subes tu rama a GitHub.
+
+🔵 4 Creas un Pull Request en GitHub GitHub compara nueva-funcionalidad con main.
+
+🟣 5 Revisas y apruebas el PR El equipo (o tú) valida los cambios.
+
+🟤 6 Merge PR → main Los cambios se fusionan con la rama principal.
+
+## ⚫ 7 (Opcional) Delete branch Se elimina la rama ya integrada.
+
+🧠 Visualización simplificada de ramas:
+
+................................................................................
+
+main: A──B──C───────────────────────────────▶
+\
+nueva-funcionalidad: D──E──F──(PR)──┐
+└───→ Merge → main (A──B──C──D──E──F)
+
+................................................................................
+
+A–B–C → commits originales en main
+
+D–E–F → commits nuevos en tu rama
+
+Luego se fusionan (merge) para actualizar main
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+El comando git stash es una herramienta muy útil de Git que te permite
+guardar temporalmente tus cambios sin hacer un commit.
+
+Vamos a verlo paso a paso con ejemplos sencillos 👇
+
+🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩
+🧩 ¿Qué hace git stash?
+🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️🛎️
+
+👉 Guarda tus cambios actuales "en un cajón" temporal
+y deja tu carpeta limpia (como si no hubieras modificado nada).
+
+💬 En otras palabras:
+
+“Guarda lo que estaba haciendo para retomarlo después.”
+
+🧠 Cuándo se usa:
+
+Imagina esto:
+
+Estás trabajando en una nueva función, modificando varios archivos, pero de repente necesitas:
+
+Cambiar de rama (git checkout main)
+
+Hacer un pull o probar algo urgente
+
+⏩⏩ Git no te dejará cambiar de rama si tienes cambios sin guardar.
+Ahí entra en juego git stash.
+
+---
+
+## ⚙️ Ejemplo paso a paso
+
+🔹 1️⃣ Estás trabajando y haces algunos cambios:
+
+`# Editas varios archivos
+index.html
+style.css`
+
+🔹 2️⃣ Git ve tus cambios
+`git status`
+
+Resultado:
+
+`modified: index.html
+modified: style.css`
+
+Pero aún no quieres hacer commit (no has terminado).
+
+🔹 3️⃣ Guardas los cambios temporalmente:
+`git stash`
+
+🧐✍️👉 Qué pasa:
+
+Git guarda tus modificaciones en una especie de “lista de stashes”.
+
+Tu carpeta vuelve al estado limpio, como si no hubieras cambiado nada.
+
+📘 Resultado:
+
+`Saved working directory and index state WIP on nueva-funcionalidad: 123abc`
+
+🔹 4️⃣ Ahora puedes cambiar de rama o hacer otras cosas
+`git checkout main`
+
+✅ Sin problemas, porque no hay cambios pendientes.
+
+🔹 5️⃣ Cuando termines, vuelves a tu rama y recuperas tus cambios
+`git checkout nueva-funcionalidad
+git stash pop`
+
+👇 👇 👇 👇 👇
+💬 git stash pop:
+
+🐥 Recupera los cambios guardados en el último stash.
+
+🐥 Los aplica de nuevo a tu carpeta.
+
+🐥 Y los borra de la lista de stashes.
+
+🎉 Tus archivos vuelven tal como estaban antes de guardarlos.
+
+🧰 Variantes útiles
+
+## Comando                       Qué hace
+
+git stash                         Guarda tus cambios actuales
+git stash save "mensaje"          Guarda con un nombre o descripción
+git stash list                    Muestra todos los stashes guardados
+git stash pop                     Recupera el último stash y lo elimina
+git stash apply                   Recupera el stash pero sin eliminarlo
+git stash drop                    Borra un stash específico
+git stash clear                   Borra todos los stashes guardados.
+
+------------------------------------------------------------------------
+
+## 💡 Ejemplo visual:
+
+🧠 Antes del stash:
+`trabajo/ (tienes cambios sin guardar)
+├── index.html (modificado)
+├── style.css (modificado)`
+
+🪣 git stash → los cambios se guardan temporalmente
+trabajo/ (ahora limpio):
+`├── index.html (original)
+├── style.css (original)`
+
+📦 `git stash list` → muestra los cambios guardados
+stash@{0}: WIP on nueva-funcionalidad
+
+🔙 `git stash pop` → recupera tus cambios
+trabajo/ (de nuevo modificado):
+`├── index.html (modificado)
+├── style.css (modificado)`
+
+---
+
+🧠 En resumen
+
+Acción                                      Comando                           Qué hace
+.......................................................................................................................................
+
+Guardar tus cambios temporalmente           git stash                       Limpia tu directorio sin perder el trabajo.
+
+Ver los stashes guardados                   git stash list                  Muestra tus “guardados rápidos”.
+
+Recuperar el último stash                   git stash pop                   Aplica y borra el último guardado.
+
+## Recuperar sin borrar                     git stash apply                 Vuelve a aplicar los cambios, pero los mantiene guardados.
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+👇 👇 👇 👇 👇 👇 👇 👇 👇
+👏 El comando `git cherry-pick`
+
+---
+
+Es otro de esos comandos muy poderosos (y a veces un poco mágicos 😅) en Git.
+Te permite tomar un commit específico de una rama y aplicarlo en otra,
+sin traer todo el historial de esa rama.
+
+Vamos a verlo de forma clara, visual y con ejemplos reales 👇
+
+🍒 ¿Qué hace `git cherry-pick?`
+
+`git cherry-pick` copia un commit específico de una rama y lo aplica en la rama actual.
+
+💬 En palabras simples:
+
+“Quiero traer solo ese cambio, no toda la rama.”
+
+🧠 Cuándo se usa
+
+Algunas situaciones típicas:
+
+🚑 Traer una corrección urgente desde una rama a otra (por ejemplo, un bugfix de producción).
+
+🔁 Reutilizar un commit hecho en otra rama sin hacer un merge completo.
+
+💡 Aplicar un cambio puntual que hiciste antes, en un lugar diferente.
+
+---
+
+## ⚙️ Ejemplo paso a paso
+
+🔹 Escenario:
+
+.....................
+Tienes dos ramas:
+
+main
+└── A──B──C
+
+nueva-funcionalidad
+└── D──E──F
+.....................
+
+Supón que el commit E (de la rama nueva-funcionalidad) corrige un error importante y quieres llevar solo ese commit a main.
+
+🔹 1️⃣ Ve a la rama donde quieres aplicar el cambio
+`git checkout main`
+
+🔹 2️⃣ Usa git cherry-pick con el ID del commit
+
+Primero, obtén el ID del commit (por ejemplo, con git log):
+`git log`
+
+Verás algo como:
+
+`commit a1b2c3d4e5f6 (HEAD -> nueva-funcionalidad)
+Author: Tú <tu@email.com>
+Message: Corrijo error en validación`
+
+Luego, ejecutas:
+`git cherry-pick a1b2c3d4e5f6`
+
+🔹 3️⃣ Git aplica ese commit en main
+
+Resultado:
+
+main
+└── A──B──C──E'
+
+👉 El commit E' es una copia exacta de E (mismo contenido, diferente hash).
+
+💡 Visualmente:
+
+Antes del cherry-pick:
+`main:                A──B──C
+nueva-funcionalidad:      D──E──F`
+
+Después del cherry-pick:
+`main:                A──B──C──E'
+nueva-funcionalidad:      D──E──F`
+
+✅ Solo el commit E fue traído a main — sin afectar los demás (D, F).
+
+🧩 Si hay conflictos…
+
+Si el commit que traes modifica líneas que también fueron cambiadas en tu rama actual,
+Git te mostrará un mensaje de conflicto:
+`error: could not apply a1b2c3d4e5f6... Corrijo error en validación`
+
+Entonces:
+
+🐥 Editas los archivos para resolver el conflicto.
+
+🐥 Luego haces:
+
+`git add .
+git cherry-pick --continue`
+
+🐥 Y Git finalizará el proceso.
+
+---
+
+## 🧰 Variantes útiles
+
+## Comando Qué hace
+
+`git cherry-pick <hash>` Aplica un commit específico
+
+`git cherry-pick <hash1> <hash2>` Aplica varios commits a la vez
+
+`git cherry-pick <hash1>..<hash2>` Aplica un rango de commits
+
+`git cherry-pick --abort` Cancela el cherry-pick (si hay errores o conflictos)
+
+## `git cherry-pick --continue` Continúa después de resolver conflictos
+
+⚠️ Cuándo NO usarlo:
+
+🐥 Evita git cherry-pick cuando:
+
+🐥 Quieras fusionar ramas completas → usa git merge o git rebase.
+
+🐥 Estés trabajando en un flujo con muchos colaboradores (puede duplicar commits).
+
+✅ En resumen
+
+## Acción Comando Qué hace
+
+Copiar un commit de otra rama git cherry-pick <hash> Aplica un commit específico a tu rama actual
+Ver commits disponibles git log Muestra el historial y los hashes
+Resolver conflictos git cherry-pick --continue Finaliza tras resolver conflictos
+
+---
+
+💡 Analogía:
+Imagina que tienes dos árboles de cerezas 🌳.
+Con `git cherry-pick`, eliges una cereza específica 🍒 (un commit) del otro árbol
+y la colocas en el tuyo — sin traer todas las ramas.
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+git bisect es un comando muy útil y potente que sirve para encontrar
+en qué commit apareció un error o bug dentro de un proyecto.
+
+Vamos a explicarlo de forma sencilla y con un ejemplo realista 👇
+
+---
+
+## 🧠 ¿Qué hace git bisect?
+
+git bisect busca el commit que introdujo un error, usando búsqueda binaria (mitad y mitad).
+
+💬 En palabras simples:
+
+“Git prueba versiones anteriores de tu código una por una, hasta encontrar el commit exacto donde empezó a fallar.”
+
+🧩 Cuándo se usa:
+
+Imagina esto:
+
+Tu proyecto funcionaba bien ayer, pero hoy algo se rompió 😩
+Sabes que el error apareció en algún commit reciente, pero no sabes cuál.
+
+👉 En lugar de revisar manualmente 100 commits,
+git bisect te ayuda a encontrar exactamente cuál commit introdujo el fallo.
+
+---
+
+## ⚙️ Ejemplo paso a paso
+
+Supongamos que tienes un historial así:
+
+A — B — C — D — E — F — G
+
+Y sabes:
+
+🐥 En el commit B → todo funcionaba bien. ✅
+
+🐥 En el commit G → el programa falla. ❌
+
+🐥 Tú quieres saber en qué commit exacto entre B y G apareció el error.
+
+🔹 1️⃣ Inicia el modo bisect
+`git bisect start`
+
+👉 Esto le dice a Git:
+“Voy a empezar una búsqueda para encontrar el commit malo.”
+
+🔹 2️⃣ Indica el commit malo
+`git bisect bad`
+
+👉 Esto marca el commit actual (por ejemplo, G) como "malo" — el que contiene el error.
+
+🔹 3️⃣ Indica un commit bueno
+`git bisect good B`
+
+👉 Aquí le dices a Git qué commit sabías que funcionaba bien.
+
+🔹 4️⃣ Git empieza la búsqueda automática:
+
+Git ahora saltará al punto medio entre los dos commits (por ejemplo, el commit D) y te dirá:
+
+`Bisecting: 3 revisions left to test after this (roughly 2 steps)`
+
+🔹 5️⃣ Pruebas tu programa
+
+👉 Si el error está presente → ejecutas:
+
+`git bisect bad`
+
+👉 Si todo funciona bien → ejecutas:
+
+`git bisect good`
+
+👉 Git volverá a saltar al siguiente punto medio automáticamente.
+
+🔹 6️⃣ Git repite el proceso
+
+Cada vez que le dices “bueno” o “malo”, Git descarta la mitad de los commits.
+Así, en muy pocos pasos (logarítmicamente), encuentra el commit exacto que introdujo el bug.
+
+🔹 7️⃣ Cuando Git encuentra el culpable 😈
+
+Git te mostrará algo como:
+
+`a1b2c3d4e5f6 is the first bad commit
+Author: Juan Pérez
+Message: "Cambio el cálculo de precios"`
+
+👉 ¡Listo!
+Ese commit es el que introdujo el error.
+
+🔹 8️⃣ Salir del modo bisect
+`git bisect reset`
+
+👉 Esto te devuelve a la rama y estado original.
+
+💡 Visualmente
+A — B — C — D — E — F — G
+↑ ↑ ↑
+good ✅ test 🔍 bad ❌
+
+👉 Git prueba mitad por mitad hasta encontrar el commit exacto que rompe algo.
+
+👉 👉 🧰 Resumen rápido
+
+## Comando                      Qué hace
+
+`git bisect start` .............Inicia la búsqueda.
+
+`git bisect bad` ...............Marca el commit actual como malo.
+
+`git bisect good <hash>` .......Marca un commit como bueno.
+
+`git bisect reset` .............Sale del modo bisect.
+
+(entre medio) Git prueba commits hasta encontrar el culpable
+
+
+......................
+⚡ En resumen sencillo:
+......................
+
+🔍 git bisect es como un detective automático:
+te ayuda a encontrar cuál commit introdujo un error,
+probando versiones anteriores del proyecto mitad por mitad hasta dar con el culpable.
+
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+Cuando ejecutas:
+
+## `$ git checkout`
+
+No especificaste una rama ni un commit,
+así que Git no cambió de rama.
+
+Lo que hizo fue mostrarte el estado actual de tu rama.
+
+El mensaje que te devolvió significa lo siguiente:
+
+`Your branch is ahead of 'origin/master' by 9 commits.
+(use "git push" to publish your local commits)`
+
+🔍 Interpretación
+
+🐥 "Your branch" → Estás actualmente en una rama local (probablemente master o main).
+
+🐥 "is ahead of 'origin/master' by 9 commits" → Tu rama local tiene 9 commits más que la versión remota (origin/master).
+
+🐥 "use 'git push' to publish your local commits" → Es una sugerencia: puedes ejecutar:
+
+`git push`
+
+Para subir esos 9 commits al repositorio remoto (GitHub, GitLab, etc.).
+
+
+
+💡 En resumen
+
+No hiciste ningún cambio con git checkout en este caso
+solo ejecutaste el comando sin argumentos, y Git te recordó el estado de sincronización con el remoto.
+
+Si quieres ver en qué rama estás y qué commits te faltan o sobran, puedes usar:
+
+`git status`
+
+o
+
+`git log origin/master..HEAD --oneline´
+
+para listar los 9 commits que aún no subiste.
+
+.....................................................................................................
+.....................................................................................................
+.....................................................................................................
+.....................................................................................................
+
+---
+
+👍 Vamos paso a paso para que sincronices tus cambios de forma segura con GitHub (sin perder trabajo).
+
+🧭 Situación actual
+
+Tu mensaje indica:
+
+`Your branch is ahead of 'origin/master' by 9 commits.`
+
+Eso significa:
+
+Has hecho 9 commits localmente.
+
+Esos commits aún no están en el remoto (origin/master).
+
+No hay conflictos por ahora.
+
+
+
+✅ OPCIÓN 1: Subir tus cambios al remoto (lo más común)
+
+Si estás seguro de que nadie más está modificando master en el remoto, simplemente ejecuta:
+
+`git push`
+
+Esto enviará tus 9 commits al repositorio remoto (origin/master).
+
+Después, Git mostrará algo como:
+
+`To github.com:usuario/repositorio.git
+   a1b2c3d..d4e5f6g  master -> master`
+
+Y todo quedará sincronizado.
+
+
+
+⚠️ OPCIÓN 2: Actualizar antes de subir (si otros también trabajan en master)
+
+Si no estás seguro de si alguien más ha hecho cambios, primero sincroniza para evitar sobrescribir nada:
+
+`git fetch origin
+git merge origin/master`
+
+o, si prefieres una historia más limpia (sin commits de merge):
+
+`git pull --rebase`
+
+Esto traerá los cambios remotos y colocará tus 9 commits encima de ellos.
+
+Luego, ya puedes subirlos:
+
+`git push`
+
+
+
+🧰 Consejo práctico
+
+Para revisar qué commits tienes de más antes de subir:
+
+`git log origin/master..HEAD --oneline`
+
+Eso te mostrará tus 9 commits pendientes.
+Ejemplo de salida:
+
+`abc1234  Fix: corregido bug en login
+def5678  Add: validación de usuario`
+...
+
+
+
+🚀 Resumen rápido
+
+Acción                                Comando                                       Cuándo usar
+....................................................................................................................
+
+Subir tus commits al remoto ......... `git push` ....................................Si solo tú trabajas en la rama
+Traer cambios antes de subir ........ `git pull --rebase` ...........................Si hay otros colaboradores
+Ver qué falta por subir ............. `git log origin/master..HEAD --oneline` .......Antes de empujar cambios
+
+
+👌 te lo explico breve y claro:
+
+Si ejecutas ahora:
+
+`git push`
+
+👉 Git subiría tus 9 commits locales a la rama remota (origin/master).
+El resultado sería que el remoto quedaría actualizado con todos tus cambios.
+
+En concreto:
+
+Tu historial local y el remoto quedarían idénticos.
+
+Nadie perdería nada si nadie más ha modificado master en el remoto.
+
+Git te mostraría una salida similar a:
+
+`To github.com:usuario/repositorio.git
+   123abcd..456efgh  master -> master`
+
+⚠️ Riesgo:
+Si alguien más ya hizo commits en el remoto (después de tu última actualización), tu push podría ser rechazado con un mensaje tipo:
+
+`! [rejected] master -> master (fetch first)`
+
+## En ese caso tendrías que hacer un git pull --rebase antes de poder subir.
+
+---
+
+Te voy a mostrar lo que Git haría internamente y cómo se verían los pasos,
+como si estuvieras en tu terminal.
+
+🧪 Escenario simulado
+
+Supongamos que:
+
+Estás en la rama master.
+
+Has hecho 9 commits locales nuevos.
+
+El remoto (origin/master) está sin esos commits.
+
+
+1️⃣ Estado actual
+`$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 9 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean`
+
+Esto te dice: “tienes 9 commits pendientes por subir”.
+
+
+2️⃣ Ver qué commits subirías
+`$ git log origin/master..HEAD --oneline
+8a7f1d3  Fix: error en login
+a3e9b21  Add: validación de email
+6f4a8de  Refactor: función de autenticación`
+...
+
+Estos son los commits que no existen aún en el remoto.
+
+
+3️⃣ Hacer el push
+`$ git push
+Enumerating objects: 25, done.
+Counting objects: 100% (25/25), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (25/25), 3.2 KiB | 3.2 MiB/s, done.
+Total 25 (delta 10), reused 0 (delta 0), pack-reused 0
+To github.com:usuario/repositorio.git
+   3f4b2a1..8a7f1d3  master -> master`
+
+
+✅ Qué acaba de pasar:
+
+Git subió los 9 commits al remoto.
+
+origin/master ahora apunta al mismo commit que tu master local.
+
+Ya no verás el mensaje “ahead by 9 commits”.
+
+4️⃣ Verificación después del push
+`$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+nothing to commit, working tree clean`
+
+💡 Todo sincronizado. Tu rama local = tu rama remota.
+
+⚠️ Si el remoto tenía cambios nuevos
+
+Si alguien más subió algo mientras tú trabajabas, Git te avisaría así:
+
+`! [rejected] master -> master (fetch first)
+error: failed to push some refs to 'github.com:usuario/repositorio.git'
+hint: Updates were rejected because the remote contains work that you do
+not have locally. Integrate the remote changes before pushing again.`
+
+Y tú lo resolverías con:
+
+`git pull --rebase
+git push`
+
+........................
+........................
+
+........................
+........................
+
+🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩🧩
+Perfecto, vamos a otra cosa. 👍
+— hay dos formas de cambiar la extensión de un archivo en Git y GitHub,
+(según prefieras hacerlo desde la web de GitHub o desde tu ordenador con Git).
+
+---
+
+## Te explico ambas 👇
+
+🖥️ OPCIÓN 1 — Cambiarlo directamente en GitHub (más fácil)
+
+1- Entra a tu repositorio en GitHub.
+
+2- Abre el archivo .txt que quieres cambiar.
+
+3- Arriba a la derecha, haz clic en el ícono de lápiz ✏️ (editar archivo).
+
+4- En la parte superior, donde aparece el nombre del archivo (por ejemplo, archivo.txt), cambia la extensión a .md, por ejemplo:
+
+archivo.md
+
+Baja hasta el final y añade un mensaje de commit, como:
+
+`rename file to markdown format`
+
+Pulsa “Commit changes”.
+
+✅ GitHub automáticamente renombrará el archivo, y ahora se mostrará con formato Markdown, renderizando los backticks (` `) correctamente.
+
+
+
+
+
+💻 OPCIÓN 2 — Cambiarlo desde tu PC (usando Git)
+
+Si trabajas con el repositorio clonado en tu ordenador:
+
+1- Abre la terminal o VS Code.
+
+2- Cambia el nombre del archivo:
+
+`git mv archivo.txt archivo.md`
+
+3- Confirma el cambio:
+
+`git commit -m "Rename archivo.txt to archivo.md"`
+
+4- Sube los cambios a GitHub:
+
+`git push´
+
+Cuando actualices la página del repositorio, verás el archivo con su nuevo nombre y formato renderizado correctamente.
+
+
+🐥🐥 Ahora tenemos que actualizar nuestro repositorio local de git con los archivos actualizados de github, cómo lo hago?
+
+👏 — Si has cambiado el archivo directamente en GitHub (en la web), tu repositorio local todavía no sabe que hay un cambio.
+Así que ahora debes sincronizarlo con GitHub para traer los cambios más recientes.
+
+
+
+## Aquí te explico paso a paso cómo hacerlo 👇
+
+🔄 ACTUALIZAR TU REPOSITORIO LOCAL CON LOS CAMBIOS DE GITHUB:
+
+
+🧭 Paso 1 — Abre tu repositorio local
+
+Abre la terminal o el panel de Git en VS Code, y asegúrate de estar dentro de la carpeta del repositorio:
+
+`cd nombre-de-tu-repositorio`
+
+
+
+🧭 Paso 2 — Comprueba en qué rama estás
+
+Normalmente es la rama principal (main o master):
+
+`git branch`
+
+Si no estás en la rama principal, cambia con:
+
+`git checkout main`
+
+
+
+🔁 Paso 3 — Descarga los cambios desde GitHub
+`git pull origin main`
+
+Esto le dice a Git:
+
+“Trae los cambios más recientes desde el repositorio remoto (GitHub) en la rama main y actualiza mi copia local”.
+
+
+⚠️ Si has hecho cambios locales sin subirlos:
+
+Si Git te muestra un mensaje de conflicto o error como:
+
+`error: Your local changes to the following files would be overwritten...`
+
+Entonces primero guarda o descarta tus cambios antes de hacer el pull.
+Por ejemplo:
+
+Para guardar (commit) antes de sincronizar:
+
+`git add .
+git commit -m "guardar cambios locales"
+git pull origin main`
+
+O para descartar tus cambios locales:
+
+`git reset --hard origin/main`
+
+✅ Paso 4 — Verifica que el cambio se descargó
+
+Comprueba que ahora en tu carpeta local aparece el archivo con extensión .md.
+
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+
+Perfecto, acabamos de editar el archivo en VS Code, y lo queremos
+actualizar en GitHub 🔥
+
+— Si ya tienes hecho el commit localmente:
+
+`git add nombre-del-archivo
+git commit -m "comentario de lo que hemos actualizado"`
+
+lo único que falta es subir (push) tus cambios a GitHub
+para que el archivo del repositorio remoto se actualice.
+
+Aquí van los pasos exactos 👇
+
+🚀 SUBIR TU CAMBIO DE VS CODE / GIT LOCAL A GITHUB.
+
+
+
+🧭 1️⃣ Verifica en qué rama estás
+
+Abre la terminal en VS Code o en Git y ejecuta:
+
+`git branch`
+
+Normalmente será la rama principal (main o master).
+
+Si no estás en ella:
+
+`git checkout main`
+
+
+
+⬆️ 2️⃣ Sube los cambios al repositorio remoto
+
+Usa:
+
+`git push origin main`
+
+📌 Esto significa:
+
+🐥 git push → sube tus commits locales
+
+🐥 origin → nombre del repositorio remoto (GitHub)
+
+🐥 main → la rama donde subirás los cambios
+
+
+
+🔄 3️⃣ Comprueba que se actualizó
+
+Ve a tu repositorio en GitHub y refresca la página:
+✅ Verás tu archivo archivoGit.md actualizado con el último contenido que comiteaste.
+
+🧩 (Opcional) Si es la primera vez que haces push en este repo
+
+Git puede pedirte establecer la rama de seguimiento. En ese caso usa:
+
+`git push -u origin main`
+
+El -u (“upstream”) le dice a Git que recuerde la conexión con GitHub para que en el futuro solo necesites escribir:
+
+`git push`
+
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+⏩🛎️✍️👉 Para no perder el control entre lo que tienes localmente (en tu PC)
+y lo que está subido a GitHub (remoto).
+
+Aquí te explico varias formas —tanto con comandos como desde VS Code— para ver qué cambios locales no están aún en GitHub 👇
+
+
+## 🧠 OPCIÓN 1 — Desde la terminal (línea de comandos)
+
+🔹 1️⃣ Ver qué archivos has modificado localmente (sin subir ni hacer commit)
+`git status`
+👇
+Esto te muestra:
+
+🐥 Archivos modificados pero no añadidos (modified:)
+
+🐥 Archivos nuevos (untracked:)
+
+🐥 Archivos ya comiteados pero aún no subidos
+(te lo dice en un mensaje tipo “Your branch is ahead of 'origin/main' by 1 commit”).
+
+    Si ves ese mensaje, significa que tienes commits locales pendientes de subir a GitHub.
+
+
+🔹 2️⃣ Ver exactamente qué commits tienes localmente y que no están en GitHub:
+`git log origin/main..HEAD`
+
+Esto muestra los commits que existen en tu copia local pero no en GitHub.
+🎉 Si no aparece nada, estás sincronizado.
+
+
+🔹 3️⃣ Ver qué cambios de código hay entre tu repositorio local y GitHub:
+`git diff origin/main`
+
+Esto te muestra las diferencias línea por línea entre tu versión local y la remota.
+
+
+
+
+
+## 💻 OPCIÓN 2 — Desde VS Code (interfaz visual)
+
+Abre el panel de control de Source Control (icono de ramas o Ctrl+Shift+G / ⌘+Shift+G).
+
+Ahí verás:
+
+🐥 Archivos modificados en tu máquina.
+
+🐥 Si ya hiciste commit, pero no hiciste push, VS Code mostrará un contador como ↑1 al lado de la rama (arriba de todo).
+
+🐥 ↑1 = 1 commit local pendiente de subir.
+
+🐥 ↓1 = 1 commit en GitHub pendiente de bajar (pull).
+
+🐥 Puedes hacer clic en un archivo para ver las diferencias (diff) visualmente.
+
+🧩 OPCIONAL — Ver estado general de sincronización
+
+También puedes usar:
+
+`git fetch
+git status`
+
+Esto actualiza la información de GitHub y te dirá si tu rama está ahead (adelantada) o behind (atrasada).
+
+
+
+😎
+Veamos cómo interpretar la salida de git status paso a paso
+así sabrás exactamente qué está pendiente entre tu copia local y GitHub.
+
+---
+
+## 🔍 Ejemplo 1 — Todo está sincronizado
+
+`On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean`
+
+🟢 Significa:
+
+🐥 Estás en la rama main.
+
+🐥 No hay cambios locales.
+
+🐥 Todo lo que tienes en tu ordenador está igual que en GitHub.
+
+✅ No necesitas hacer nada.
+
+---
+
+
+## 🔍 Ejemplo 2 — Hay cambios sin añadir
+
+`On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+modified: archivoGit.md`
+
+🟡 Significa:
+
+🐥 Has modificado archivoGit.md.
+
+🐥 Pero aún no lo has añadido ni comiteado.
+
+👉 Solución:
+
+`git add archivoGit.md
+git commit -m "Describe tu cambio"`
+
+---
+
+
+## 🔍 Ejemplo 3 — Hay commits locales sin subir a GitHub
+
+`On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+(use "git push" to publish your local commits)
+
+nothing to commit, working tree clean`
+
+🟠 Significa:
+
+🐥 Has hecho un commit local.
+
+🐥 Pero aún no lo has subido a GitHub.
+
+👉 Solución:
+
+`git push`
+
+---
+
+
+## 🔍 Ejemplo 4 — GitHub tiene commits que tú no tienes
+
+`On branch main
+Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
+(use "git pull" to update your local branch)
+
+nothing to commit, working tree clean`
+
+🔵 Significa:
+
+🐥 En GitHub hay 2 commits nuevos que tú todavía no tienes.
+
+🐥 Tu repositorio local está desactualizado.
+
+👉 Solución:
+
+`git pull`
+
+---
+
+
+## 🔍 Ejemplo 5 — Tienes cambios locales sin subir y GitHub tiene otros distintos
+
+`On branch main
+Your branch and 'origin/main' have diverged,
+and have 2 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)`
+
+🔴 Significa:
+
+🐥 Tanto tú como alguien más han hecho cambios en la misma rama.
+
+🐥 Hay que sincronizar y resolver conflictos.
+
+👉 Solución:
+
+`git pull`
+
+# (si hay conflictos, los resuelves)
+
+`git push`
+
+## | FIN |
+
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️
+I M P O R T A N T E
+
+---
+
+Aquí tienes el flujo ideal de trabajo con Git y GitHub,
+explicado paso a paso, con comandos y el por qué de cada uno.
+
+Este orden te asegura que:
+
+🐥 Nunca pierdas cambios.
+
+🐥 Mantengas tu repositorio limpio.
+
+🐥 Evites conflictos con GitHub.
+
+---
+
+## 🧭 FLUJO IDEAL DE TRABAJO CON GIT + GITHUB
+
+🪄 1️⃣ — Actualizar tu copia local antes de empezar a trabajar
+
+Siempre antes de tocar nada, sincroniza tu repositorio local con GitHub:
+
+`git pull origin main`
+
+📘 Esto descarga los cambios más recientes del repositorio remoto (GitHub) y los aplica a tu copia local.
+➡️ Así evitas trabajar sobre una versión desactualizada.
+
+
+
+✍️ 2️⃣ — Editar tus archivos
+
+Haz los cambios que necesites en tu proyecto usando VS Code u otro editor.
+
+
+
+🧩 3️⃣ — Ver qué cambiaste
+
+Comprueba qué archivos has modificado:
+
+`git status`
+
+Esto te muestra:
+
+🐥 Archivos nuevos (untracked)
+
+🐥 Archivos modificados (modified)
+
+🐥 Archivos listos para comitear (staged)
+
+
+
+📦 4️⃣ — Añadir los cambios al área de preparación
+
+Cuando estés listo para guardar tus cambios:
+
+`git add .`
+
+(. añade todos los archivos modificados; si quieres añadir solo uno: git add nombreArchivo)
+
+
+
+📝 5️⃣ — Crear un commit
+
+Crea un commit con un mensaje claro:
+
+`git commit -m "Descripción breve del cambio"`
+
+💡 Ejemplo:
+
+`git commit -m "Actualizado archivoGit.md con ejemplos de git status"`
+
+Esto guarda tus cambios localmente (pero aún no están en GitHub).
+
+
+
+⬆️ 6️⃣ — Subir los cambios a GitHub
+
+🛎️🛎️ Envía tus commits al repositorio remoto: 🛎️🛎️
+
+`git push origin main`
+
+📤 Ahora tus cambios están en GitHub y disponibles para todos los colaboradores.
+
+
+
+🔄 7️⃣ — (Opcional) Revisa el estado de sincronización
+
+Después de subir:
+
+`git status`
+
+Deberías ver:
+
+`Your branch is up to date with 'origin/main'.`
+
+✅ Eso significa que tu repositorio local y GitHub están sincronizados.
+
+---
+
+
+## 💡 RESUMEN VISUAL RÁPIDO
+
+## Acción                                       Comando                         Cuándo usar
+============================================================================================================
+
+Actualizar desde GitHub................. ```git pull origin main``` ............Antes de empezar a trabajar
+
+Ver cambios............................. ```git status``` ......................Durante o antes de comitear
+
+Preparar archivos....................... ```git add . ``` ......................Antes de hacer commit
+
+Guardar cambios localmente.............. ```git commit -m "mensaje"``` .........Cuando termines un bloque de trabajo
+
+## Subir a GitHub....................... ```git push origin main``` ............Cuando quieras actualizar el remoto
+
+
+👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 The End.
