@@ -1507,6 +1507,64 @@ O para descartar tus cambios locales:
 
 Comprueba que ahora en tu carpeta local aparece el archivo con extensión .md.
 
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+
+Perfecto, acabamos de editar el archivo en VS Code, y lo queremos
+actualizar en GitHub 🔥
+
+— Si ya tienes hecho el commit localmente:
+
+`git add nombre-del-archivo
+git commit -m "comentario de lo que hemos actualizado"`
+
+lo único que falta es subir (push) tus cambios a GitHub
+para que el archivo del repositorio remoto se actualice.
+
+Aquí van los pasos exactos 👇
+
+🚀 SUBIR TU CAMBIO DE VS CODE / GIT LOCAL A GITHUB.
+
+🧭 1️⃣ Verifica en qué rama estás
+
+Abre la terminal en VS Code o en Git y ejecuta:
+
+`git branch`
+
+Normalmente será la rama principal (main o master).
+
+Si no estás en ella:
+
+`git checkout main`
+
+⬆️ 2️⃣ Sube los cambios al repositorio remoto
+
+Usa:
+
+`git push origin main`
+
+📌 Esto significa:
+
+🐥 git push → sube tus commits locales
+
+🐥 origin → nombre del repositorio remoto (GitHub)
+
+🐥 main → la rama donde subirás los cambios
+
+🔄 3️⃣ Comprueba que se actualizó
+
+Ve a tu repositorio en GitHub y refresca la página:
+✅ Verás tu archivo archivoGit.md actualizado con el último contenido que comiteaste.
+
+🧩 (Opcional) Si es la primera vez que haces push en este repo
+
+Git puede pedirte establecer la rama de seguimiento. En ese caso usa:
+
+`git push -u origin main`
+
+El -u (“upstream”) le dice a Git que recuerde la conexión con GitHub para que en el futuro solo necesites escribir:
+
+`git push`
+
 FIN
 
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
