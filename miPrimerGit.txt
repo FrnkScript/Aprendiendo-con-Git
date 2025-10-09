@@ -1896,15 +1896,15 @@ Deberías ver:
 ## Acción                                       Comando                         Cuándo usar
 ============================================================================================================
 
-Actualizar desde GitHub................. ```git pull origin main``` ............Antes de empezar a trabajar
+Actualizar desde GitHub................. git pull origin main ............Antes de empezar a trabajar
 
-Ver cambios............................. ```git status``` ......................Durante o antes de comitear
+Ver cambios............................. git status ......................Durante o antes de comitear
 
-Preparar archivos....................... ```git add . ``` ......................Antes de hacer commit
+Preparar archivos....................... git add .  ......................Antes de hacer commit
 
-Guardar cambios localmente.............. ```git commit -m "mensaje"``` .........Cuando termines un bloque de trabajo
+Guardar cambios localmente.............. git commit -m "mensaje" .........Cuando termines un bloque de trabajo
 
-## Subir a GitHub....................... ```git push origin main``` ............Cuando quieras actualizar el remoto
+## Subir a GitHub....................... git push origin main ............Cuando quieras actualizar el remoto
 
 
 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 The End.
