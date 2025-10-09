@@ -53,12 +53,12 @@ Arrancar el agente SSH y añadir la clave:
 --------------------------------
 Copiar la clave pública al portapapeles:
 
-macOS: pbcopy < ~/.ssh/id_ed25519.pub
+macOS: `pbcopy < ~/.ssh/id_ed25519.pub`
 
-Linux: xclip -sel clip < ~/.ssh/id_ed25519.pub (si tienes xclip) 
-👀 o también: cat ~/.ssh/id_ed25519.pub y copiar a mano
+Linux: `xclip -sel clip < ~/.ssh/id_ed25519.pub` (si tienes xclip).
+👀 o también: `cat ~/.ssh/id_ed25519.pub` y copiar a mano
 
-Windows (Git Bash): clip < ~/.ssh/id_ed25519.pub
+Windows (Git Bash): `clip < ~/.ssh/id_ed25519.pub`
 --------------------------------
 
 
