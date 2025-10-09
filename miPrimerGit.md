@@ -1565,7 +1565,289 @@ El -u (“upstream”) le dice a Git que recuerde la conexión con GitHub para q
 
 `git push`
 
-FIN
+🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+⏩🛎️✍️👉 Para no perder el control entre lo que tienes localmente (en tu PC)
+y lo que está subido a GitHub (remoto).
+
+Aquí te explico varias formas —tanto con comandos como desde VS Code— para ver qué cambios locales no están aún en GitHub 👇
+
+---
+
+## 🧠 OPCIÓN 1 — Desde la terminal (línea de comandos)
+
+🔹 1️⃣ Ver qué archivos has modificado localmente (sin subir ni hacer commit)
+`git status`
+👇
+Esto te muestra:
+
+🐥 Archivos modificados pero no añadidos (modified:)
+
+🐥 Archivos nuevos (untracked:)
+
+🐥 Archivos ya comiteados pero aún no subidos
+(te lo dice en un mensaje tipo “Your branch is ahead of 'origin/main' by 1 commit”).
+
+    Si ves ese mensaje, significa que tienes commits locales pendientes de subir a GitHub.
+
+🔹 2️⃣ Ver exactamente qué commits tienes localmente y que no están en GitHub:
+`git log origin/main..HEAD`
+
+Esto muestra los commits que existen en tu copia local pero no en GitHub.
+🎉 Si no aparece nada, estás sincronizado.
+
+🔹 3️⃣ Ver qué cambios de código hay entre tu repositorio local y GitHub:
+`git diff origin/main`
+
+Esto te muestra las diferencias línea por línea entre tu versión local y la remota.
+
+---
+
+## 💻 OPCIÓN 2 — Desde VS Code (interfaz visual)
+
+Abre el panel de control de Source Control (icono de ramas o Ctrl+Shift+G / ⌘+Shift+G).
+
+Ahí verás:
+
+🐥 Archivos modificados en tu máquina.
+
+🐥 Si ya hiciste commit, pero no hiciste push, VS Code mostrará un contador como ↑1 al lado de la rama (arriba de todo).
+
+🐥 ↑1 = 1 commit local pendiente de subir.
+
+🐥 ↓1 = 1 commit en GitHub pendiente de bajar (pull).
+
+🐥 Puedes hacer clic en un archivo para ver las diferencias (diff) visualmente.
+
+🧩 OPCIONAL — Ver estado general de sincronización
+
+También puedes usar:
+
+`git fetch
+git status`
+
+Esto actualiza la información de GitHub y te dirá si tu rama está ahead (adelantada) o behind (atrasada).
+
+---
+
+---
+
+😎
+Veamos cómo interpretar la salida de git status paso a paso
+así sabrás exactamente qué está pendiente entre tu copia local y GitHub.
+
+---
+
+## 🔍 Ejemplo 1 — Todo está sincronizado
+
+`On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean`
+
+🟢 Significa:
+
+🐥 Estás en la rama main.
+
+🐥 No hay cambios locales.
+
+🐥 Todo lo que tienes en tu ordenador está igual que en GitHub.
+
+✅ No necesitas hacer nada.
+
+---
+
+## 🔍 Ejemplo 2 — Hay cambios sin añadir
+
+`On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+modified: archivoGit.md`
+
+🟡 Significa:
+
+🐥 Has modificado archivoGit.md.
+
+🐥 Pero aún no lo has añadido ni comiteado.
+
+👉 Solución:
+
+`git add archivoGit.md
+git commit -m "Describe tu cambio"`
+
+---
+
+## 🔍 Ejemplo 3 — Hay commits locales sin subir a GitHub
+
+`On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+(use "git push" to publish your local commits)
+
+nothing to commit, working tree clean`
+
+🟠 Significa:
+
+🐥 Has hecho un commit local.
+
+🐥 Pero aún no lo has subido a GitHub.
+
+👉 Solución:
+
+`git push`
+
+---
+
+## 🔍 Ejemplo 4 — GitHub tiene commits que tú no tienes
+
+`On branch main
+Your branch is behind 'origin/main' by 2 commits, and can be fast-forwarded.
+(use "git pull" to update your local branch)
+
+nothing to commit, working tree clean`
+
+🔵 Significa:
+
+🐥 En GitHub hay 2 commits nuevos que tú todavía no tienes.
+
+🐥 Tu repositorio local está desactualizado.
+
+👉 Solución:
+
+`git pull`
+
+---
+
+## 🔍 Ejemplo 5 — Tienes cambios locales sin subir y GitHub tiene otros distintos
+
+`On branch main
+Your branch and 'origin/main' have diverged,
+and have 2 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)`
+
+🔴 Significa:
+
+🐥 Tanto tú como alguien más han hecho cambios en la misma rama.
+
+🐥 Hay que sincronizar y resolver conflictos.
+
+👉 Solución:
+
+`git pull`
+
+# (si hay conflictos, los resuelves)
+
+`git push`
+
+## | FIN |
 
 WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿🌿
+
+🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️ 🙇‍♂️
+I M P O R T A N T E  
+ -----------------------------
+
+Aquí tienes el flujo ideal de trabajo con Git y GitHub,
+explicado paso a paso, con comandos y el por qué de cada uno.
+
+Este orden te asegura que:
+
+🐥 Nunca pierdas cambios.
+
+🐥 Mantengas tu repositorio limpio.
+
+🐥 Evites conflictos con GitHub.
+
+---
+
+## 🧭 FLUJO IDEAL DE TRABAJO CON GIT + GITHUB
+
+🪄 1️⃣ — Actualizar tu copia local antes de empezar a trabajar
+
+Siempre antes de tocar nada, sincroniza tu repositorio local con GitHub:
+
+`git pull origin main`
+
+📘 Esto descarga los cambios más recientes del repositorio remoto (GitHub) y los aplica a tu copia local.
+➡️ Así evitas trabajar sobre una versión desactualizada.
+
+✍️ 2️⃣ — Editar tus archivos
+
+Haz los cambios que necesites en tu proyecto usando VS Code u otro editor.
+
+🧩 3️⃣ — Ver qué cambiaste
+
+Comprueba qué archivos has modificado:
+
+`git status`
+
+Esto te muestra:
+
+🐥 Archivos nuevos (untracked)
+
+🐥 Archivos modificados (modified)
+
+🐥 Archivos listos para comitear (staged)
+
+📦 4️⃣ — Añadir los cambios al área de preparación
+
+Cuando estés listo para guardar tus cambios:
+
+`git add .`
+
+(. añade todos los archivos modificados; si quieres añadir solo uno: git add nombreArchivo)
+
+📝 5️⃣ — Crear un commit
+
+Crea un commit con un mensaje claro:
+
+`git commit -m "Descripción breve del cambio"`
+
+💡 Ejemplo:
+
+`git commit -m "Actualizado archivoGit.md con ejemplos de git status"`
+
+Esto guarda tus cambios localmente (pero aún no están en GitHub).
+
+⬆️ 6️⃣ — Subir los cambios a GitHub
+
+🛎️🛎️ Envía tus commits al repositorio remoto: 🛎️🛎️
+
+`git push origin main`
+
+📤 Ahora tus cambios están en GitHub y disponibles para todos los colaboradores.
+
+🔄 7️⃣ — (Opcional) Revisa el estado de sincronización
+
+Después de subir:
+
+`git status`
+
+Deberías ver:
+
+`Your branch is up to date with 'origin/main'.`
+
+✅ Eso significa que tu repositorio local y GitHub están sincronizados.
+
+---
+
+## 💡 RESUMEN VISUAL RÁPIDO
+
+Acción Comando Cuándo usar
+
+---
+
+Actualizar desde GitHub git pull origin main Antes de empezar a trabajar
+
+Ver cambios git status Durante o antes de comitear
+
+Preparar archivos git add . Antes de hacer commit
+
+Guardar cambios localmente git commit -m "mensaje" Cuando termines un bloque de trabajo
+
+Subir a GitHub git push origin main Cuando quieras actualizar el remoto
+
+---
+
+👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏 👏
