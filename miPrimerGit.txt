@@ -120,6 +120,18 @@ cd miPrimerRepositorio`
 
 🌿 Crea un archivo de texto llamado miPrimerGit.txt:
 
+✅ Opción 1: Usar touch para crear un archivo vacío
+touch nombre_del_archivo.txt
+
+Esto crea un archivo vacío llamado nombre_del_archivo.txt en el directorio actual.
+
+
+✅ Opción 2: Usar echo para crear un archivo con contenido
+echo "Este es el contenido del archivo" > archivo.txt
+
+Esto crea (o sobrescribe) un archivo llamado archivo.txt con el texto "Este es el contenido del archivo".
+
++++++++++++++++++++++++++++++++++++++
 `echo "¡Hola, Git!" > miPrimerGit.txt`
 
 ✍️ Nota: Esto crea el archivo y escribe “¡Hola, Git!” dentro de él.
